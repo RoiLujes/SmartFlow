@@ -16,6 +16,7 @@
         <ul class="nav-links">
             <li><a href="#hero">Home</a></li>
             <li><a href="#map-section">Live Map</a></li>
+            <li><a href="#sandbox-section">Sandbox</a></li>
             <li><a href="#dashboard">Dashboard</a></li>
             <li><a href="#how">How It Works</a></li>
         </ul>
@@ -30,7 +31,7 @@
         <div class="hero-content">
             <div class="hero-badge">AI-Powered Urban Mobility</div>
             <h1>SmartFlow</h1>
-            <p class="hero-sub">Intelligent traffic management for French cities. Real-time adaptive signals powered by AI.</p>
+            <p class="hero-sub">Intelligent traffic management for French cities. Real-time adaptive signals powered by AI. Try our Sandbox to build your own city.</p>
             <div class="hero-stats-row">
                 <div class="hero-stat">
                     <span class="hs-num">-38%</span>
@@ -47,7 +48,7 @@
             </div>
             <div class="hero-actions">
                 <a href="#map-section" class="btn-primary">Explore Live Map</a>
-                <a href="#how" class="btn-secondary">How It Works</a>
+                <a href="#sandbox-section" class="btn-secondary">🧪 Open Sandbox</a>
             </div>
         </div>
         <div class="scroll-hint">
@@ -56,125 +57,93 @@
         </div>
     </section>
 
-    <!-- CITY MAP SECTION -->
-    <section id="map-section" class="section">
+    <!-- LIVE MAP SECTION -->
+    <section id="map-section" class="section-dark">
         <div class="section-header">
-            <h2>Live Traffic Intelligence</h2>
-            <p>Select a city and explore real-time AI traffic management</p>
+            <h2>🗺️ Live Traffic Map</h2>
+            <p>Real-time AI-optimized traffic across French cities</p>
         </div>
 
-        <!-- CITY TABS -->
         <div class="city-tabs">
-            <button class="city-tab active" onclick="switchCity('paris')">
+            <button class="city-tab active" data-city="paris">
                 <span class="city-icon">🗼</span> Paris
             </button>
-            <button class="city-tab" onclick="switchCity('reims')">
-                <span class="city-icon">🏰</span> Reims
+            <button class="city-tab" data-city="reims">
+                <span class="city-icon">🍾</span> Reims
             </button>
-            <button class="city-tab" onclick="switchCity('lille')">
-                <span class="city-icon">🏛</span> Lille
+            <button class="city-tab" data-city="lille">
+                <span class="city-icon">🏛️</span> Lille
             </button>
         </div>
 
-        <!-- MAP + SIDEBAR -->
         <div class="map-wrapper">
-            <!-- SIDEBAR -->
             <div class="map-sidebar">
                 <div class="sidebar-section">
-                    <h3>📊 City Stats</h3>
+                    <h3>City Stats</h3>
                     <div class="city-stat-row">
                         <span>Active Vehicles</span>
-                        <span class="csv" id="cs-vehicles">12,847</span>
+                        <span class="csv" id="stat-vehicles">12,847</span>
                     </div>
                     <div class="city-stat-row">
-                        <span>AI Intersections</span>
-                        <span class="csv" id="cs-intersections">48</span>
+                        <span>AI Signals</span>
+                        <span class="csv" id="stat-signals">342</span>
                     </div>
                     <div class="city-stat-row">
-                        <span>Congestion Level</span>
-                        <span class="csv congestion-low" id="cs-congestion">Low</span>
+                        <span>Congestion</span>
+                        <span class="csv congestion-moderate" id="stat-congestion">Moderate</span>
                     </div>
                     <div class="city-stat-row">
                         <span>Avg Speed</span>
-                        <span class="csv" id="cs-speed">34 km/h</span>
-                    </div>
-                    <div class="city-stat-row">
-                        <span>Signal Adjustments</span>
-                        <span class="csv" id="cs-adjustments">1,247</span>
+                        <span class="csv" id="stat-speed">34 km/h</span>
                     </div>
                     <div class="city-stat-row">
                         <span>Incidents</span>
-                        <span class="csv incident-val" id="cs-incidents">3</span>
+                        <span class="csv incident-val" id="stat-incidents">3</span>
                     </div>
                 </div>
 
                 <div class="sidebar-section">
-                    <h3>🔧 Display Options</h3>
+                    <h3>Controls</h3>
                     <div class="control-item">
-                        <label>Map View</label>
-                        <select id="mapViewSelect" onchange="changeMapView(this.value)">
+                        <label>Map Style</label>
+                        <select id="map-style-select">
                             <option value="dark">Dark</option>
                             <option value="satellite">Satellite</option>
                             <option value="standard">Standard</option>
                         </select>
                     </div>
                     <div class="control-item">
-                        <label>Traffic Overlay</label>
+                        <label>Show Layers</label>
                         <div class="toggle-group">
-                            <button class="toggle-btn active" id="tog-traffic" onclick="toggleTraffic()">Show</button>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <label>Show Vehicles</label>
-                        <div class="toggle-group">
-                            <button class="toggle-btn active" id="tog-vehicles" onclick="toggleVehicles()">Show</button>
+                            <button class="toggle-btn active" id="tog-roads">Roads</button>
+                            <button class="toggle-btn active" id="tog-vehicles">Cars</button>
+                            <button class="toggle-btn active" id="tog-signals">Signals</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="sidebar-section">
-                    <h3>⚠️ Live Alerts</h3>
+                    <h3>Live Alerts</h3>
                     <div class="alerts-container" id="alerts-container">
-                        <div class="alert-item alert-warning">
-                            🚧 Slow traffic on A4 near Reims Centre
-                        </div>
-                        <div class="alert-item alert-success">
-                            ✅ AI rerouted 340 vehicles via Bd Lundy
-                        </div>
-                        <div class="alert-item alert-info">
-                            🔄 Signal timing optimized at 12 intersections
-                        </div>
+                        <div class="alert-item alert-warning">🚧 Accident on Bd Périphérique</div>
+                        <div class="alert-item alert-success">✅ 520 vehicles rerouted by AI</div>
+                        <div class="alert-item alert-info">🔄 16 signals optimized</div>
                     </div>
                 </div>
             </div>
 
-            <!-- MAP -->
             <div class="map-container">
-                <div id="map"></div>
-
-                <!-- MAP OVERLAYS -->
                 <div class="map-overlay-top">
-                    <div class="mot-city" id="mot-city">📍 Paris</div>
-                    <div class="mot-time" id="mot-time">14:32:07</div>
+                    <div class="mot-city" id="overlay-city">📍 Paris</div>
+                    <div class="mot-time" id="overlay-time">🕐 --:--</div>
                     <div class="mot-status">● AI Active</div>
                 </div>
-
+                <div id="map"></div>
                 <div class="map-legend-overlay">
-                    <div class="legend-item">
-                        <span class="leg-color" style="background:#00e676;"></span> Fluide
-                    </div>
-                    <div class="legend-item">
-                        <span class="leg-color" style="background:#ffeb3b;"></span> Modéré
-                    </div>
-                    <div class="legend-item">
-                        <span class="leg-color" style="background:#ff9800;"></span> Dense
-                    </div>
-                    <div class="legend-item">
-                        <span class="leg-color" style="background:#f44336;"></span> Bloqué
-                    </div>
-                    <div class="legend-item">
-                        <span class="leg-color" style="background:#2196f3; width:8px; height:8px; border-radius:50%;"></span> Intersection AI
-                    </div>
+                    <div class="legend-item"><span class="leg-color" style="background:#00e676"></span> Flowing</div>
+                    <div class="legend-item"><span class="leg-color" style="background:#ffeb3b"></span> Moderate</div>
+                    <div class="legend-item"><span class="leg-color" style="background:#ff9800"></span> Slow</div>
+                    <div class="legend-item"><span class="leg-color" style="background:#f44336"></span> Congested</div>
                 </div>
             </div>
         </div>
@@ -183,97 +152,258 @@
     <!-- INTERSECTION DETAIL PANEL -->
     <div class="intersection-detail" id="intersection-detail">
         <div class="id-header">
-            <h3 id="id-name">Intersection</h3>
-            <button class="id-close" onclick="closeDetail()">✕</button>
+            <h3 id="id-title">Intersection</h3>
+            <button class="id-close" id="id-close">✕</button>
         </div>
         <div class="id-body">
             <div class="id-visual">
                 <div class="mini-intersection">
                     <div class="mi-road mi-road-v"></div>
                     <div class="mi-road mi-road-h"></div>
-                    <div class="mi-light mi-light-n" id="mi-n">🟢</div>
-                    <div class="mi-light mi-light-s" id="mi-s">🟢</div>
-                    <div class="mi-light mi-light-e" id="mi-e">🔴</div>
-                    <div class="mi-light mi-light-w" id="mi-w">🔴</div>
+                    <div class="mi-light mi-light-n" id="mil-n">🔴</div>
+                    <div class="mi-light mi-light-s" id="mil-s">🔴</div>
+                    <div class="mi-light mi-light-e" id="mil-e">🟢</div>
+                    <div class="mi-light mi-light-w" id="mil-w">🟢</div>
                 </div>
             </div>
             <div class="id-stats">
-                <div class="ids-row"><span>Cars Waiting N/S</span><span id="ids-ns">12</span></div>
-                <div class="ids-row"><span>Cars Waiting E/W</span><span id="ids-ew">8</span></div>
-                <div class="ids-row"><span>Cycle Time</span><span id="ids-cycle">45s</span></div>
-                <div class="ids-row"><span>Avg Wait</span><span id="ids-wait">18s</span></div>
-                <div class="ids-row"><span>AI Decision</span><span class="ai-decision" id="ids-decision">Extend N/S +8s</span></div>
+                <div class="ids-row"><span>Wait Time</span><span id="id-wait">12s</span></div>
+                <div class="ids-row"><span>Cars/min</span><span id="id-flow">48</span></div>
+                <div class="ids-row"><span>Pedestrians</span><span id="id-peds">23</span></div>
+                <div class="ids-row"><span>AI Decision</span><span class="ai-decision" id="id-ai">Extend Green +8s</span></div>
             </div>
         </div>
         <div class="id-chart">
-            <h4>Traffic Flow (Last 60 min)</h4>
-            <div class="mini-chart" id="mini-chart"></div>
+            <h4>Traffic Flow (last 30 min)</h4>
+            <div class="mini-chart" id="id-chart-bars"></div>
         </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="section section-dark">
+    <!-- ========================== -->
+    <!-- SANDBOX SECTION -->
+    <!-- ========================== -->
+    <section id="sandbox-section" class="section-dark">
         <div class="section-header">
-            <h2>Performance Dashboard</h2>
-            <p>AI SmartFlow vs Traditional traffic lights</p>
+            <h2>🧪 Sandbox Mode</h2>
+            <p>Build your own city — add roads, traffic lights, and vehicles. Compare AI vs traditional signals.</p>
+        </div>
+
+        <div class="sandbox-wrapper">
+            <div class="sandbox-toolbar">
+                <h3>🛠️ Tools</h3>
+
+                <div class="tool-group">
+                    <label>Select Tool</label>
+                    <div class="tool-buttons">
+                        <button class="tool-btn active" data-tool="road" title="Draw Road">
+                            <span class="tool-icon">🛣️</span>
+                            <span>Road</span>
+                        </button>
+                        <button class="tool-btn" data-tool="traffic-light" title="Place Traffic Light">
+                            <span class="tool-icon">🚦</span>
+                            <span>Light</span>
+                        </button>
+                        <button class="tool-btn" data-tool="car" title="Add Vehicle">
+                            <span class="tool-icon">🚗</span>
+                            <span>Car</span>
+                        </button>
+                        <button class="tool-btn" data-tool="delete" title="Delete">
+                            <span class="tool-icon">🗑️</span>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-group">
+                    <label>Road Type</label>
+                    <select id="road-type-select">
+                        <option value="2lane">2-Lane Road</option>
+                        <option value="4lane">4-Lane Avenue</option>
+                        <option value="highway">Highway</option>
+                    </select>
+                </div>
+
+                <div class="tool-group">
+                    <label>Traffic Density</label>
+                    <div class="slider-row">
+                        <input type="range" id="density-slider" min="1" max="10" value="5">
+                        <span class="slider-val" id="density-val">5</span>
+                    </div>
+                </div>
+
+                <div class="tool-group">
+                    <label>Speed Limit</label>
+                    <div class="slider-row">
+                        <input type="range" id="speed-slider" min="20" max="130" value="50" step="10">
+                        <span class="slider-val" id="speed-val">50 km/h</span>
+                    </div>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="tool-group">
+                    <label>Signal Mode</label>
+                    <div class="toggle-group">
+                        <button class="toggle-btn" id="mode-traditional">Traditional</button>
+                        <button class="toggle-btn active" id="mode-ai">AI Smart</button>
+                    </div>
+                </div>
+
+                <div class="tool-group">
+                    <label>Simulation</label>
+                    <div class="sim-controls">
+                        <button class="sim-btn sim-play" id="sandbox-play">▶ Play</button>
+                        <button class="sim-btn sim-pause" id="sandbox-pause">⏸ Pause</button>
+                        <button class="sim-btn sim-reset" id="sandbox-reset">🔄 Reset</button>
+                    </div>
+                    <div class="sim-speed-row">
+                        <label>Speed</label>
+                        <select id="sim-speed">
+                            <option value="0.5">0.5x</option>
+                            <option value="1" selected>1x</option>
+                            <option value="2">2x</option>
+                            <option value="5">5x</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="tool-group">
+                    <label>Presets</label>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="simple">Simple Cross</button>
+                        <button class="preset-btn" data-preset="roundabout">Roundabout</button>
+                        <button class="preset-btn" data-preset="grid">City Grid</button>
+                        <button class="preset-btn" data-preset="highway">Highway Exit</button>
+                    </div>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="sandbox-stats">
+                    <h3>📊 Live Comparison</h3>
+                    <div class="comparison-box">
+                        <div class="comp-col comp-ai">
+                            <span class="comp-label">AI Mode</span>
+                            <div class="comp-stat">
+                                <span>Avg Wait</span>
+                                <span class="comp-val" id="sb-ai-wait">0s</span>
+                            </div>
+                            <div class="comp-stat">
+                                <span>Throughput</span>
+                                <span class="comp-val" id="sb-ai-throughput">0/min</span>
+                            </div>
+                            <div class="comp-stat">
+                                <span>Avg Speed</span>
+                                <span class="comp-val" id="sb-ai-speed">0 km/h</span>
+                            </div>
+                            <div class="comp-stat">
+                                <span>CO₂</span>
+                                <span class="comp-val" id="sb-ai-co2">0 g</span>
+                            </div>
+                        </div>
+                        <div class="comp-vs">VS</div>
+                        <div class="comp-col comp-trad">
+                            <span class="comp-label">Traditional</span>
+                            <div class="comp-stat">
+                                <span>Avg Wait</span>
+                                <span class="comp-val" id="sb-trad-wait">0s</span>
+                            </div>
+                            <div class="comp-stat">
+                                <span>Throughput</span>
+                                <span class="comp-val" id="sb-trad-throughput">0/min</span>
+                            </div>
+                            <div class="comp-stat">
+                                <span>Avg Speed</span>
+                                <span class="comp-val" id="sb-trad-speed">0 km/h</span>
+                            </div>
+                            <div class="comp-stat">
+                                <span>CO₂</span>
+                                <span class="comp-val" id="sb-trad-co2">0 g</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="improvement-bar">
+                        <div class="improvement-fill" id="sb-improvement-fill"></div>
+                        <span class="improvement-text" id="sb-improvement-text">AI: 0% better</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sandbox-map-container">
+                <div class="sandbox-overlay-info" id="sandbox-info">
+                    Click on the map to start building. Select a tool from the left panel.
+                </div>
+                <div id="sandbox-map"></div>
+                <div class="sandbox-minimap-toggle" id="minimap-toggle">🗺️</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section">
+        <div class="section-header">
+            <h2>📊 Performance Dashboard</h2>
+            <p>AI-optimized vs traditional traffic management</p>
         </div>
 
         <div class="dash-grid">
             <div class="dash-card">
                 <div class="dc-header">
-                    <span class="dc-icon">⏱</span>
+                    <span class="dc-icon">⏱️</span>
                     <span class="dc-title">Average Wait Time</span>
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
                         <span class="dc-val">18s</span>
-                        <span class="dc-label">SmartFlow</span>
+                        <span class="dc-label">AI Smart</span>
                     </div>
-                    <span class="dc-vs">vs</span>
+                    <span class="dc-vs">VS</span>
                     <div class="dc-trad">
-                        <span class="dc-val">52s</span>
+                        <span class="dc-val">45s</span>
                         <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">↓ 65% faster</div>
+                <div class="dc-improvement">↓ 60% Reduction</div>
             </div>
 
             <div class="dash-card">
                 <div class="dc-header">
                     <span class="dc-icon">🚗</span>
-                    <span class="dc-title">Throughput / Hour</span>
+                    <span class="dc-title">Throughput</span>
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
-                        <span class="dc-val">2,840</span>
-                        <span class="dc-label">SmartFlow</span>
+                        <span class="dc-val">2,400</span>
+                        <span class="dc-label">AI Smart</span>
                     </div>
-                    <span class="dc-vs">vs</span>
+                    <span class="dc-vs">VS</span>
                     <div class="dc-trad">
-                        <span class="dc-val">1,920</span>
+                        <span class="dc-val">1,600</span>
                         <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">↑ 48% more vehicles</div>
+                <div class="dc-improvement">↑ 50% More Cars/hr</div>
             </div>
 
             <div class="dash-card">
                 <div class="dc-header">
                     <span class="dc-icon">🌱</span>
-                    <span class="dc-title">CO₂ Emissions</span>
+                    <span class="dc-title">CO₂ Saved</span>
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
-                        <span class="dc-val">-28%</span>
-                        <span class="dc-label">SmartFlow</span>
+                        <span class="dc-val">142t</span>
+                        <span class="dc-label">AI Smart</span>
                     </div>
-                    <span class="dc-vs">vs</span>
+                    <span class="dc-vs">VS</span>
                     <div class="dc-trad">
-                        <span class="dc-val">Base</span>
+                        <span class="dc-val">198t</span>
                         <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">🌍 12T CO₂ saved / month</div>
+                <div class="dc-improvement">↓ 28% Less Emissions</div>
             </div>
 
             <div class="dash-card">
@@ -284,30 +414,30 @@
                 <div class="dc-comparison">
                     <div class="dc-ai">
                         <span class="dc-val">4.2m</span>
-                        <span class="dc-label">SmartFlow</span>
+                        <span class="dc-label">AI Smart</span>
                     </div>
-                    <span class="dc-vs">vs</span>
+                    <span class="dc-vs">VS</span>
                     <div class="dc-trad">
-                        <span class="dc-val">8.7m</span>
+                        <span class="dc-val">7.8m</span>
                         <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">↓ 52% faster response</div>
+                <div class="dc-improvement">↓ 46% Faster Response</div>
             </div>
         </div>
 
         <div class="live-counter-row">
             <div class="live-counter">
-                <span class="lc-num" id="lc-cars">847,230</span>
-                <span class="lc-label">Cars Optimized Today</span>
+                <span class="lc-num" id="lc-optimized">0</span>
+                <span class="lc-label">Signals Optimized Today</span>
             </div>
             <div class="live-counter">
-                <span class="lc-num" id="lc-co2">5,820</span>
-                <span class="lc-label">Kg CO₂ Saved</span>
+                <span class="lc-num" id="lc-vehicles">0</span>
+                <span class="lc-label">Vehicles Managed</span>
             </div>
             <div class="live-counter">
-                <span class="lc-num" id="lc-hours">12,450</span>
-                <span class="lc-label">Hours Saved</span>
+                <span class="lc-num" id="lc-co2">0</span>
+                <span class="lc-label">Tons CO₂ Saved</span>
             </div>
         </div>
     </section>
@@ -315,40 +445,39 @@
     <!-- HOW IT WORKS -->
     <section id="how" class="section">
         <div class="section-header">
-            <h2>How SmartFlow Works</h2>
-            <p>From sensor data to optimized traffic in milliseconds</p>
+            <h2>⚙️ How It Works</h2>
+            <p>Our AI-powered pipeline in 4 steps</p>
         </div>
-
         <div class="steps-timeline">
             <div class="step-item">
                 <div class="step-num">1</div>
                 <div class="step-content">
-                    <h3>📷 Sense</h3>
-                    <p>Cameras and IoT sensors detect vehicle count, speed, and queue length at every intersection in real time.</p>
+                    <h3>📷 Data Collection</h3>
+                    <p>Cameras, IoT sensors, and GPS data feed real-time information into our system from thousands of points across the city.</p>
                 </div>
             </div>
             <div class="step-connector"></div>
             <div class="step-item">
                 <div class="step-num">2</div>
                 <div class="step-content">
-                    <h3>🧠 Analyze</h3>
-                    <p>AI processes data from all connected intersections simultaneously, predicting congestion before it happens.</p>
+                    <h3>🧠 AI Analysis</h3>
+                    <p>Deep learning models predict traffic patterns 30 minutes ahead, analyzing flow density, speed, and incidents.</p>
                 </div>
             </div>
             <div class="step-connector"></div>
             <div class="step-item">
                 <div class="step-num">3</div>
                 <div class="step-content">
-                    <h3>⚡ Adapt</h3>
-                    <p>Signal timings adjust dynamically — extending green for heavy flow, creating green waves for emergency vehicles.</p>
+                    <h3>🚦 Adaptive Signals</h3>
+                    <p>Traffic lights dynamically adjust timing based on real-time demand. Green waves are created for optimal flow.</p>
                 </div>
             </div>
             <div class="step-connector"></div>
             <div class="step-item">
                 <div class="step-num">4</div>
                 <div class="step-content">
-                    <h3>📈 Learn</h3>
-                    <p>The system learns from every decision, improving predictions for rush hours, events, and weather conditions.</p>
+                    <h3>📊 Continuous Learning</h3>
+                    <p>The system learns from every cycle, improving predictions and reducing congestion further each day.</p>
                 </div>
             </div>
         </div>
@@ -357,540 +486,1275 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-brand">🚦 SmartFlow</div>
-        <p>AI-Powered Traffic Management for Smarter Cities</p>
-        <p class="footer-note">Simulation for demonstration purposes • Paris • Reims • Lille</p>
+        <p>AI-Powered Traffic Management — Prototype Demo</p>
+        <p class="footer-note">Built for the Design Thinking Challenge · Real-time simulation with OpenStreetMap data</p>
     </footer>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
+    <!-- ========================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================== -->
     <script>
         // ==========================================
-        // CITY DATA
+        // CITY DATA — Real coordinates & roads
         // ==========================================
-        const cities = {
+        const cityData = {
             paris: {
-                name: 'Paris',
                 center: [48.8566, 2.3522],
-                zoom: 13,
-                vehicles: '24,312',
-                intersections: '124',
-                congestion: 'Moderate',
-                congestionClass: 'congestion-moderate',
-                speed: '28 km/h',
-                adjustments: 3842,
-                incidents: 7,
-                // Real intersections in Paris
-                intersectionPoints: [
-                    { name: 'Place de la Bastille', lat: 48.8533, lng: 2.3692, density: 'high' },
-                    { name: 'Place de la République', lat: 48.8675, lng: 2.3637, density: 'high' },
-                    { name: 'Châtelet', lat: 48.8584, lng: 2.3474, density: 'critical' },
-                    { name: 'Place de la Nation', lat: 48.8487, lng: 2.3953, density: 'medium' },
-                    { name: 'Gare du Nord', lat: 48.8809, lng: 2.3553, density: 'high' },
-                    { name: 'Gare de Lyon', lat: 48.8443, lng: 2.3743, density: 'medium' },
-                    { name: 'Opéra', lat: 48.8719, lng: 2.3316, density: 'high' },
-                    { name: 'Place de Clichy', lat: 48.8835, lng: 2.3272, density: 'medium' },
-                    { name: 'Porte de Vincennes', lat: 48.8472, lng: 2.4104, density: 'low' },
-                    { name: 'Place d\'Italie', lat: 48.8311, lng: 2.3558, density: 'medium' },
-                    { name: 'Montparnasse', lat: 48.8422, lng: 2.3219, density: 'high' },
-                    { name: 'Porte Maillot', lat: 48.8781, lng: 2.2822, density: 'medium' },
-                    { name: 'Pont de Neuilly', lat: 48.8847, lng: 2.2600, density: 'low' },
-                    { name: 'La Défense', lat: 48.8920, lng: 2.2362, density: 'high' },
-                    { name: 'Arc de Triomphe', lat: 48.8738, lng: 2.2950, density: 'critical' },
-                    { name: 'Concorde', lat: 48.8656, lng: 2.3212, density: 'high' },
-                    { name: 'Saint-Lazare', lat: 48.8760, lng: 2.3250, density: 'high' },
-                    { name: 'Belleville', lat: 48.8717, lng: 2.3769, density: 'medium' },
-                    { name: 'Ménilmontant', lat: 48.8662, lng: 2.3839, density: 'low' },
-                    { name: 'Oberkampf', lat: 48.8649, lng: 2.3684, density: 'medium' },
-                ],
-                // Road segments (polylines simulating traffic)
+                zoom: 14,
+                label: '📍 Paris',
+                stats: { vehicles: '12,847', signals: '342', congestion: 'Moderate', speed: '34 km/h', incidents: '3', congClass: 'congestion-moderate' },
                 roads: [
-                    { name: 'Champs-Élysées', coords: [[48.8686,2.3073],[48.8704,2.3035],[48.8722,2.2986],[48.8738,2.2950]], color: '#f44336', flow: 'Bloqué — 8 km/h' },
-                    { name: 'Bd Haussmann', coords: [[48.8745,2.3289],[48.8738,2.3200],[48.8730,2.3120],[48.8719,2.3050]], color: '#ff9800', flow: 'Dense — 15 km/h' },
-                    { name: 'Rue de Rivoli', coords: [[48.8565,2.3630],[48.8570,2.3530],[48.8575,2.3450],[48.8580,2.3370],[48.8584,2.3280]], color: '#ffeb3b', flow: 'Modéré — 22 km/h' },
-                    { name: 'Bd de Sébastopol', coords: [[48.8584,2.3474],[48.8625,2.3497],[48.8670,2.3520],[48.8720,2.3543]], color: '#00e676', flow: 'Fluide — 35 km/h' },
-                    { name: 'Bd Voltaire', coords: [[48.8533,2.3692],[48.8580,2.3710],[48.8620,2.3730],[48.8675,2.3637]], color: '#ff9800', flow: 'Dense — 14 km/h' },
-                    { name: 'Av. de la Grande Armée', coords: [[48.8738,2.2950],[48.8780,2.2870],[48.8820,2.2780],[48.8860,2.2680]], color: '#ffeb3b', flow: 'Modéré — 25 km/h' },
-                    { name: 'Bd Périphérique Nord', coords: [[48.8970,2.3100],[48.8960,2.3300],[48.8940,2.3500],[48.8910,2.3700]], color: '#f44336', flow: 'Bloqué — 5 km/h' },
-                    { name: 'Bd Périphérique Sud', coords: [[48.8180,2.3000],[48.8190,2.3200],[48.8200,2.3400],[48.8210,2.3600]], color: '#ff9800', flow: 'Dense — 18 km/h' },
-                    { name: 'Quai de Seine Rive Droite', coords: [[48.8560,2.3700],[48.8570,2.3600],[48.8575,2.3500],[48.8580,2.3400],[48.8582,2.3300]], color: '#00e676', flow: 'Fluide — 38 km/h' },
-                    { name: 'Bd Saint-Germain', coords: [[48.8505,2.3700],[48.8510,2.3550],[48.8515,2.3400],[48.8520,2.3250]], color: '#ffeb3b', flow: 'Modéré — 20 km/h' },
+                    { name: 'Champs-Élysées', coords: [[48.8698, 2.3078], [48.8656, 2.3194], [48.8626, 2.3273]], status: 'moderate' },
+                    { name: 'Rue de Rivoli', coords: [[48.8566, 2.3280], [48.8560, 2.3400], [48.8555, 2.3525], [48.8548, 2.3600]], status: 'slow' },
+                    { name: 'Bd Saint-Germain', coords: [[48.8510, 2.3320], [48.8497, 2.3440], [48.8488, 2.3550]], status: 'flowing' },
+                    { name: 'Bd Haussmann', coords: [[48.8745, 2.3283], [48.8738, 2.3380], [48.8730, 2.3450]], status: 'congested' },
+                    { name: 'Av de l\'Opéra', coords: [[48.8700, 2.3320], [48.8650, 2.3340], [48.8620, 2.3360]], status: 'flowing' },
+                    { name: 'Bd Périphérique Nord', coords: [[48.8970, 2.3200], [48.8965, 2.3400], [48.8960, 2.3600]], status: 'congested' },
+                    { name: 'Quai de Seine', coords: [[48.8580, 2.3470], [48.8565, 2.3520], [48.8545, 2.3570], [48.8530, 2.3610]], status: 'moderate' },
+                    { name: 'Bd Voltaire', coords: [[48.8630, 2.3700], [48.8580, 2.3780], [48.8530, 2.3850]], status: 'flowing' },
+                    { name: 'Rue Lafayette', coords: [[48.8760, 2.3400], [48.8780, 2.3500], [48.8800, 2.3600]], status: 'moderate' },
+                    { name: 'Av des Champs', coords: [[48.8640, 2.3100], [48.8620, 2.3150], [48.8600, 2.3200]], status: 'slow' }
+                ],
+                intersections: [
+                    { name: 'Place de la Concorde', coords: [48.8656, 2.3212], flow: 62, wait: 18 },
+                    { name: 'Arc de Triomphe', coords: [48.8738, 2.2950], flow: 85, wait: 8 },
+                    { name: 'Place de la Bastille', coords: [48.8533, 2.3692], flow: 45, wait: 25 },
+                    { name: 'Opéra Garnier', coords: [48.8720, 2.3316], flow: 55, wait: 15 },
+                    { name: 'Châtelet', coords: [48.8583, 2.3475], flow: 72, wait: 12 },
+                    { name: 'République', coords: [48.8675, 2.3640], flow: 38, wait: 30 }
                 ]
             },
             reims: {
-                name: 'Reims',
-                center: [49.2533, 4.0318],
-                zoom: 14,
-                vehicles: '4,215',
-                intersections: '32',
-                congestion: 'Low',
-                congestionClass: 'congestion-low',
-                speed: '38 km/h',
-                adjustments: 892,
-                incidents: 1,
-                intersectionPoints: [
-                    { name: 'Place Drouet-d\'Erlon', lat: 49.2520, lng: 4.0283, density: 'medium' },
-                    { name: 'Place Royale', lat: 49.2528, lng: 4.0337, density: 'low' },
-                    { name: 'Cathédrale Notre-Dame', lat: 49.2538, lng: 4.0346, density: 'medium' },
-                    { name: 'Porte Mars', lat: 49.2565, lng: 4.0274, density: 'low' },
-                    { name: 'Gare de Reims', lat: 49.2585, lng: 4.0244, density: 'high' },
-                    { name: 'Place Luton', lat: 49.2462, lng: 4.0317, density: 'low' },
-                    { name: 'Bd Lundy / Av. de Laon', lat: 49.2590, lng: 4.0310, density: 'medium' },
-                    { name: 'Pont de Vesle', lat: 49.2500, lng: 4.0250, density: 'medium' },
-                    { name: 'Av. Jean Jaurès', lat: 49.2475, lng: 4.0215, density: 'low' },
-                    { name: 'Bd Général Leclerc', lat: 49.2505, lng: 4.0180, density: 'low' },
-                    { name: 'Place du Forum', lat: 49.2545, lng: 4.0310, density: 'medium' },
-                    { name: 'Rue de Vesle / Bd de la Paix', lat: 49.2510, lng: 4.0400, density: 'high' },
-                    { name: 'Rond-point Farman', lat: 49.2420, lng: 4.0250, density: 'low' },
-                    { name: 'Tinqueux - RN31', lat: 49.2540, lng: 4.0080, density: 'medium' },
-                    { name: 'A4 Sortie Reims Centre', lat: 49.2650, lng: 4.0450, density: 'high' },
-                ],
+                center: [49.2535, 4.0347],
+                zoom: 15,
+                label: '📍 Reims',
+                stats: { vehicles: '4,230', signals: '128', congestion: 'Low', speed: '42 km/h', incidents: '1', congClass: 'congestion-low' },
                 roads: [
-                    { name: 'Rue de Vesle', coords: [[49.2500,4.0200],[49.2510,4.0250],[49.2520,4.0300],[49.2525,4.0350],[49.2530,4.0400]], color: '#ffeb3b', flow: 'Modéré — 24 km/h' },
-                    { name: 'Bd Lundy', coords: [[49.2560,4.0250],[49.2570,4.0280],[49.2580,4.0300],[49.2595,4.0340]], color: '#00e676', flow: 'Fluide — 40 km/h' },
-                    { name: 'Av. de Laon', coords: [[49.2590,4.0310],[49.2620,4.0320],[49.2650,4.0340],[49.2680,4.0360]], color: '#00e676', flow: 'Fluide — 42 km/h' },
-                    { name: 'Bd de la Paix', coords: [[49.2530,4.0400],[49.2540,4.0430],[49.2550,4.0460],[49.2560,4.0490]], color: '#ff9800', flow: 'Dense — 18 km/h' },
-                    { name: 'Rue Jean Jaurès', coords: [[49.2520,4.0283],[49.2500,4.0260],[49.2480,4.0240],[49.2460,4.0220]], color: '#00e676', flow: 'Fluide — 36 km/h' },
-                    { name: 'Bd Général Leclerc', coords: [[49.2530,4.0200],[49.2520,4.0180],[49.2510,4.0160],[49.2500,4.0140]], color: '#ffeb3b', flow: 'Modéré — 28 km/h' },
-                    { name: 'A4 (Section Reims)', coords: [[49.2650,4.0450],[49.2670,4.0550],[49.2690,4.0650],[49.2710,4.0750]], color: '#f44336', flow: 'Bloqué — 10 km/h' },
-                    { name: 'Chaussée Bocquaine', coords: [[49.2538,4.0346],[49.2555,4.0360],[49.2575,4.0370],[49.2590,4.0380]], color: '#00e676', flow: 'Fluide — 35 km/h' },
+                    { name: 'Bd Lundy', coords: [[49.2570, 4.0280], [49.2555, 4.0350], [49.2540, 4.0420]], status: 'flowing' },
+                    { name: 'Rue de Vesle', coords: [[49.2530, 4.0250], [49.2525, 4.0350], [49.2520, 4.0430]], status: 'moderate' },
+                    { name: 'Av de Laon', coords: [[49.2600, 4.0330], [49.2570, 4.0340], [49.2540, 4.0345]], status: 'flowing' },
+                    { name: 'Bd de la Paix', coords: [[49.2520, 4.0180], [49.2500, 4.0260], [49.2485, 4.0340]], status: 'flowing' },
+                    { name: 'Rue Cérès', coords: [[49.2550, 4.0340], [49.2545, 4.0370], [49.2535, 4.0400]], status: 'moderate' },
+                    { name: 'Bd Général Leclerc', coords: [[49.2490, 4.0300], [49.2480, 4.0400], [49.2470, 4.0480]], status: 'slow' },
+                    { name: 'Rue de Talleyrand', coords: [[49.2555, 4.0380], [49.2530, 4.0385], [49.2510, 4.0390]], status: 'flowing' },
+                    { name: 'Av Jean Jaurès', coords: [[49.2490, 4.0350], [49.2470, 4.0360], [49.2450, 4.0375]], status: 'moderate' }
+                ],
+                intersections: [
+                    { name: 'Place Drouet d\'Erlon', coords: [49.2533, 4.0337], flow: 35, wait: 10 },
+                    { name: 'Porte Mars', coords: [49.2568, 4.0305], flow: 28, wait: 12 },
+                    { name: 'Cathédrale', coords: [49.2538, 4.0347], flow: 42, wait: 8 },
+                    { name: 'Place Royale', coords: [49.2520, 4.0335], flow: 30, wait: 14 }
                 ]
             },
             lille: {
-                name: 'Lille',
                 center: [50.6292, 3.0573],
-                zoom: 14,
-                vehicles: '8,732',
-                intersections: '56',
-                congestion: 'Moderate',
-                congestionClass: 'congestion-moderate',
-                speed: '31 km/h',
-                adjustments: 1563,
-                incidents: 4,
-                intersectionPoints: [
-                    { name: 'Grand Place', lat: 50.6369, lng: 3.0635, density: 'high' },
-                    { name: 'Gare Lille Flandres', lat: 50.6365, lng: 3.0708, density: 'critical' },
-                    { name: 'Gare Lille Europe', lat: 50.6388, lng: 3.0755, density: 'high' },
-                    { name: 'Porte de Paris', lat: 50.6307, lng: 3.0620, density: 'medium' },
-                    { name: 'Place de la République', lat: 50.6305, lng: 3.0575, density: 'medium' },
-                    { name: 'Bd de la Liberté', lat: 50.6335, lng: 3.0598, density: 'high' },
-                    { name: 'Euralille', lat: 50.6380, lng: 3.0740, density: 'high' },
-                    { name: 'Rue Nationale / Bd Carnot', lat: 50.6350, lng: 3.0615, density: 'medium' },
-                    { name: 'Vieux-Lille', lat: 50.6420, lng: 3.0600, density: 'low' },
-                    { name: 'Porte de Valenciennes', lat: 50.6230, lng: 3.0660, density: 'medium' },
-                    { name: 'CHR - Bd Belfort', lat: 50.6100, lng: 3.0400, density: 'high' },
-                    { name: 'Roubaix Centre', lat: 50.6900, lng: 3.1800, density: 'medium' },
-                    { name: 'Tourcoing Centre', lat: 50.7233, lng: 3.1600, density: 'low' },
-                    { name: 'Villeneuve-d\'Ascq', lat: 50.6220, lng: 3.1380, density: 'medium' },
-                    { name: 'Rond-point Pasteur', lat: 50.6280, lng: 3.0500, density: 'low' },
-                ],
+                zoom: 15,
+                label: '📍 Lille',
+                stats: { vehicles: '8,560', signals: '256', congestion: 'High', speed: '28 km/h', incidents: '4', congClass: 'congestion-high' },
                 roads: [
-                    { name: 'Bd de la Liberté', coords: [[50.6369,3.0635],[50.6350,3.0615],[50.6335,3.0598],[50.6310,3.0580]], color: '#ff9800', flow: 'Dense — 16 km/h' },
-                    { name: 'Rue Nationale', coords: [[50.6369,3.0635],[50.6380,3.0650],[50.6390,3.0680],[50.6395,3.0710]], color: '#ffeb3b', flow: 'Modéré — 22 km/h' },
-                    { name: 'Bd Carnot', coords: [[50.6350,3.0615],[50.6360,3.0650],[50.6365,3.0708]], color: '#f44336', flow: 'Bloqué — 7 km/h' },
-                    { name: 'Bd Victor Hugo', coords: [[50.6305,3.0575],[50.6290,3.0530],[50.6275,3.0490],[50.6260,3.0460]], color: '#00e676', flow: 'Fluide — 38 km/h' },
-                    { name: 'Périphérique Sud', coords: [[50.6050,3.0200],[50.6060,3.0400],[50.6080,3.0600],[50.6100,3.0800]], color: '#ffeb3b', flow: 'Modéré — 55 km/h' },
-                    { name: 'A1 Sortie Lille', coords: [[50.6150,3.0900],[50.6180,3.0850],[50.6220,3.0780],[50.6260,3.0700]], color: '#ff9800', flow: 'Dense — 30 km/h' },
-                    { name: 'Rue du Molinel', coords: [[50.6365,3.0708],[50.6355,3.0730],[50.6345,3.0750],[50.6335,3.0770]], color: '#00e676', flow: 'Fluide — 32 km/h' },
+                    { name: 'Rue Faidherbe', coords: [[50.6365, 3.0630], [50.6340, 3.0640], [50.6310, 3.0650]], status: 'slow' },
+                    { name: 'Bd de la Liberté', coords: [[50.6310, 3.0550], [50.6290, 3.0580], [50.6270, 3.0620]], status: 'moderate' },
+                    { name: 'Rue Nationale', coords: [[50.6340, 3.0580], [50.6320, 3.0590], [50.6300, 3.0595]], status: 'congested' },
+                    { name: 'Bd Carnot', coords: [[50.6380, 3.0600], [50.6370, 3.0550], [50.6355, 3.0500]], status: 'slow' },
+                    { name: 'Rue de Béthune', coords: [[50.6300, 3.0600], [50.6280, 3.0605], [50.6260, 3.0610]], status: 'moderate' },
+                    { name: 'Bd Vauban', coords: [[50.6260, 3.0480], [50.6270, 3.0530], [50.6275, 3.0570]], status: 'flowing' },
+                    { name: 'Av du Peuple Belge', coords: [[50.6360, 3.0680], [50.6345, 3.0700], [50.6330, 3.0720]], status: 'congested' },
+                    { name: 'Rue Solférino', coords: [[50.6290, 3.0530], [50.6280, 3.0560], [50.6265, 3.0590]], status: 'moderate' }
+                ],
+                intersections: [
+                    { name: 'Grand Place', coords: [50.6368, 3.0636], flow: 78, wait: 22 },
+                    { name: 'Place de la République', coords: [50.6295, 3.0573], flow: 55, wait: 18 },
+                    { name: 'Gare Lille Flandres', coords: [50.6364, 3.0714], flow: 90, wait: 28 },
+                    { name: 'Porte de Paris', coords: [50.6320, 3.0620], flow: 60, wait: 16 }
                 ]
             }
         };
 
-        // ==========================================
-        // MAP SETUP
-        // ==========================================
-        let map;
-        let currentCity = 'paris';
-        let trafficLayer = L.layerGroup();
-        let intersectionLayer = L.layerGroup();
-        let vehicleLayer = L.layerGroup();
-        let roadLayer = L.layerGroup();
-        let showTraffic = true;
-        let showVehicles = true;
+        const statusColors = {
+            flowing: '#00e676',
+            moderate: '#ffeb3b',
+            slow: '#ff9800',
+            congested: '#f44336'
+        };
 
-        // Tile layers
+        const statusWeights = {
+            flowing: 5,
+            moderate: 6,
+            slow: 7,
+            congested: 8
+        };
+
+        const carEmojis = ['🚗', '🚙', '🚕', '🚐', '🚓', '🚑'];
+
+        // ==========================================
+        // TILE LAYERS
+        // ==========================================
         const tileLayers = {
             dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '© OpenStreetMap © CARTO',
-                maxZoom: 19
+                attribution: '© OpenStreetMap © CARTO', maxZoom: 19
             }),
             satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: '© Esri',
-                maxZoom: 19
+                attribution: '© Esri', maxZoom: 19
             }),
             standard: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap',
-                maxZoom: 19
+                attribution: '© OpenStreetMap', maxZoom: 19
             })
         };
 
-        let currentTileLayer = 'dark';
+        // ==========================================
+        // MAIN MAP INIT
+        // ==========================================
+        let mainMap, currentTileLayer, currentCity = 'paris';
+        let roadLayers = [], vehicleMarkers = [], signalMarkers = [];
+        let vehicleAnimations = [];
+        let showRoads = true, showVehicles = true, showSignals = true;
 
         function initMap() {
-            map = L.map('map', {
-                center: cities.paris.center,
-                zoom: cities.paris.zoom,
-                zoomControl: false,
-                attributionControl: false
-            });
-
-            tileLayers.dark.addTo(map);
-            trafficLayer.addTo(map);
-            intersectionLayer.addTo(map);
-            vehicleLayer.addTo(map);
-            roadLayer.addTo(map);
-
-            L.control.zoom({ position: 'topright' }).addTo(map);
-
-            loadCityData('paris');
+            mainMap = L.map('map', { zoomControl: true, attributionControl: false });
+            currentTileLayer = tileLayers.dark;
+            currentTileLayer.addTo(mainMap);
+            loadCity('paris');
+            updateClock();
+            setInterval(updateClock, 1000);
         }
 
-        // ==========================================
-        // SWITCH CITY
-        // ==========================================
-        function switchCity(cityKey) {
-            currentCity = cityKey;
-            const city = cities[cityKey];
+        function loadCity(city) {
+            currentCity = city;
+            const data = cityData[city];
 
-            // Update tabs
-            document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
-            event.target.closest('.city-tab').classList.add('active');
+            mainMap.setView(data.center, data.zoom);
 
-            // Fly to city
-            map.flyTo(city.center, city.zoom, { duration: 1.5 });
+            // Update sidebar
+            document.getElementById('stat-vehicles').textContent = data.stats.vehicles;
+            document.getElementById('stat-signals').textContent = data.stats.signals;
+            document.getElementById('stat-congestion').textContent = data.stats.congestion;
+            document.getElementById('stat-congestion').className = 'csv ' + data.stats.congClass;
+            document.getElementById('stat-speed').textContent = data.stats.speed;
+            document.getElementById('stat-incidents').textContent = data.stats.incidents;
+            document.getElementById('overlay-city').textContent = data.label;
 
-            // Update sidebar stats
-            document.getElementById('cs-vehicles').textContent = city.vehicles;
-            document.getElementById('cs-intersections').textContent = city.intersections;
-            document.getElementById('cs-congestion').textContent = city.congestion;
-            document.getElementById('cs-congestion').className = 'csv ' + city.congestionClass;
-            document.getElementById('cs-speed').textContent = city.speed;
-            document.getElementById('cs-adjustments').textContent = city.adjustments.toLocaleString();
-            document.getElementById('cs-incidents').textContent = city.incidents;
+            // Clear previous
+            clearMapLayers();
 
-            // Update overlay
-            document.getElementById('mot-city').textContent = '📍 ' + city.name;
-
-            // Load data
-            loadCityData(cityKey);
-
-            // Close detail panel
-            closeDetail();
-        }
-
-        // ==========================================
-        // LOAD CITY DATA ON MAP
-        // ==========================================
-        function loadCityData(cityKey) {
-            const city = cities[cityKey];
-
-            // Clear layers
-            intersectionLayer.clearLayers();
-            roadLayer.clearLayers();
-            vehicleLayer.clearLayers();
-
-            // Draw roads with traffic colors
-            city.roads.forEach(road => {
+            // Draw roads
+            data.roads.forEach(road => {
                 const polyline = L.polyline(road.coords, {
-                    color: road.color,
-                    weight: 6,
-                    opacity: 0.8,
-                    smoothFactor: 1,
+                    color: statusColors[road.status],
+                    weight: statusWeights[road.status],
+                    opacity: 0.85,
+                    smoothFactor: 1.5,
                     lineCap: 'round'
-                }).addTo(roadLayer);
+                }).addTo(mainMap);
 
-                polyline.bindTooltip(
-                    `<strong>${road.name}</strong><br>${road.flow}`,
-                    { className: 'road-tooltip', sticky: true }
-                );
+                polyline.bindTooltip(`
+                    <strong>${road.name}</strong><br>
+                    Status: <span style="color:${statusColors[road.status]}; font-weight:700">${road.status.toUpperCase()}</span>
+                `, { className: 'road-tooltip', sticky: true });
+
+                roadLayers.push(polyline);
+
+                // Add vehicles that travel along this road
+                spawnVehiclesOnRoad(road);
             });
 
             // Draw intersections
-            const densityColors = {
-                low: '#00e676',
-                medium: '#ffeb3b',
-                high: '#ff9800',
-                critical: '#f44336'
-            };
+            data.intersections.forEach(inter => {
+                const marker = L.circleMarker(inter.coords, {
+                    radius: 10,
+                    fillColor: '#00e676',
+                    fillOpacity: 0.9,
+                    color: '#fff',
+                    weight: 2
+                }).addTo(mainMap);
 
-            city.intersectionPoints.forEach(int => {
-                const color = densityColors[int.density];
+                marker.bindTooltip(`
+                    <strong>🚦 ${inter.name}</strong><br>
+                    Flow: ${inter.flow} cars/min<br>
+                    Wait: ${inter.wait}s
+                `, { className: 'int-tooltip' });
 
-                // Pulsing circle
-                const circle = L.circleMarker([int.lat, int.lng], {
-                    radius: int.density === 'critical' ? 10 : int.density === 'high' ? 8 : 6,
-                    fillColor: color,
-                    fillOpacity: 0.7,
-                    color: color,
-                    weight: 2,
-                    opacity: 0.4
-                }).addTo(intersectionLayer);
+                marker.on('click', () => openIntersectionDetail(inter));
 
-                circle.bindTooltip(
-                    `<strong>🚦 ${int.name}</strong><br>Density: <span style="color:${color};font-weight:700">${int.density.toUpperCase()}</span><br><em>Click for details</em>`,
-                    { className: 'int-tooltip' }
-                );
+                signalMarkers.push(marker);
 
-                circle.on('click', () => openIntersectionDetail(int));
-
-                // Outer pulse ring
-                L.circleMarker([int.lat, int.lng], {
-                    radius: int.density === 'critical' ? 18 : int.density === 'high' ? 14 : 10,
-                    fillColor: color,
-                    fillOpacity: 0.1,
-                    color: color,
-                    weight: 1,
-                    opacity: 0.2
-                }).addTo(intersectionLayer);
+                // Pulse animation
+                pulseSignal(marker);
             });
 
-            // Spawn moving vehicles
-            spawnVehicles(cityKey);
+            // Update tabs
+            document.querySelectorAll('.city-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.city === city);
+            });
+        }
+
+        function clearMapLayers() {
+            roadLayers.forEach(l => mainMap.removeLayer(l));
+            vehicleMarkers.forEach(m => mainMap.removeLayer(m));
+            signalMarkers.forEach(m => mainMap.removeLayer(m));
+            vehicleAnimations.forEach(a => cancelAnimationFrame(a.raf));
+            roadLayers = [];
+            vehicleMarkers = [];
+            signalMarkers = [];
+            vehicleAnimations = [];
         }
 
         // ==========================================
-        // VEHICLES
+        // VEHICLES THAT FOLLOW ROADS
         // ==========================================
-        let vehicleIntervals = [];
+        function spawnVehiclesOnRoad(road) {
+            const numCars = road.status === 'congested' ? 4 : road.status === 'slow' ? 3 : 2;
 
-        function spawnVehicles(cityKey) {
-            // Clear previous
-            vehicleIntervals.forEach(iv => clearInterval(iv));
-            vehicleIntervals = [];
-            vehicleLayer.clearLayers();
-
-            const city = cities[cityKey];
-            const vehicleEmojis = ['🚗', '🚙', '🚕', '🚐', '🚌', '🏍', '🚛'];
-            let vehicles = [];
-
-            // Create vehicles on roads
-            city.roads.forEach(road => {
-                const numVehicles = road.color === '#f44336' ? 6 :
-                                    road.color === '#ff9800' ? 4 :
-                                    road.color === '#ffeb3b' ? 3 : 2;
-
-                for (let i = 0; i < numVehicles; i++) {
-                    const emoji = vehicleEmojis[Math.floor(Math.random() * vehicleEmojis.length)];
-                    const segIndex = Math.floor(Math.random() * (road.coords.length - 1));
-                    const t = Math.random();
-                    const lat = road.coords[segIndex][0] + (road.coords[segIndex+1][0] - road.coords[segIndex][0]) * t + (Math.random()-0.5)*0.001;
-                    const lng = road.coords[segIndex][1] + (road.coords[segIndex+1][1] - road.coords[segIndex][1]) * t + (Math.random()-0.5)*0.001;
-
-                    const icon = L.divIcon({
-                        html: `<span style="font-size:16px;">${emoji}</span>`,
-                        className: 'vehicle-icon',
-                        iconSize: [20, 20],
-                        iconAnchor: [10, 10]
-                    });
-
-                    const marker = L.marker([lat, lng], { icon: icon }).addTo(vehicleLayer);
-                    vehicles.push({ marker, road, progress: t, segIndex, speed: 0.002 + Math.random() * 0.005 });
-                }
-            });
-
-            // Animate vehicles
-            const iv = setInterval(() => {
-                vehicles.forEach(v => {
-                    v.progress += v.speed;
-                    if (v.progress >= 1) {
-                        v.segIndex++;
-                        v.progress = 0;
-                        if (v.segIndex >= v.road.coords.length - 1) {
-                            v.segIndex = 0;
-                            v.progress = 0;
-                        }
-                    }
-
-                    const c = v.road.coords;
-                    const si = v.segIndex;
-                    if (si < c.length - 1) {
-                        const lat = c[si][0] + (c[si+1][0] - c[si][0]) * v.progress;
-                        const lng = c[si][1] + (c[si+1][1] - c[si][1]) * v.progress;
-                        v.marker.setLatLng([lat, lng]);
-                    }
+            for (let i = 0; i < numCars; i++) {
+                const emoji = carEmojis[Math.floor(Math.random() * carEmojis.length)];
+                const icon = L.divIcon({
+                    html: `<span style="font-size:18px;">${emoji}</span>`,
+                    className: 'vehicle-icon',
+                    iconSize: [22, 22],
+                    iconAnchor: [11, 11]
                 });
-            }, 200);
 
-            vehicleIntervals.push(iv);
-        }
+                const marker = L.marker(road.coords[0], { icon: icon }).addTo(mainMap);
+                vehicleMarkers.push(marker);
 
-        // ==========================================
-        // MAP CONTROLS
-        // ==========================================
-        function changeMapView(view) {
-            map.removeLayer(tileLayers[currentTileLayer]);
-            currentTileLayer = view;
-            tileLayers[view].addTo(map);
-        }
-
-        function toggleTraffic() {
-            const btn = document.getElementById('tog-traffic');
-            showTraffic = !showTraffic;
-            if (showTraffic) {
-                roadLayer.addTo(map);
-                intersectionLayer.addTo(map);
-                btn.classList.add('active');
-                btn.textContent = 'Show';
-            } else {
-                map.removeLayer(roadLayer);
-                map.removeLayer(intersectionLayer);
-                btn.classList.remove('active');
-                btn.textContent = 'Hide';
+                // Animate along road
+                animateVehicleOnRoad(marker, road, i * (3000 / numCars));
             }
         }
 
-        function toggleVehicles() {
-            const btn = document.getElementById('tog-vehicles');
-            showVehicles = !showVehicles;
-            if (showVehicles) {
-                vehicleLayer.addTo(map);
-                btn.classList.add('active');
-                btn.textContent = 'Show';
-            } else {
-                map.removeLayer(vehicleLayer);
-                btn.classList.remove('active');
-                btn.textContent = 'Hide';
+        function animateVehicleOnRoad(marker, road, delay) {
+            const coords = road.coords;
+            const speedFactor = road.status === 'congested' ? 0.2 : road.status === 'slow' ? 0.4 : road.status === 'moderate' ? 0.7 : 1.0;
+
+            // Calculate total distance
+            let totalDist = 0;
+            const segDists = [];
+            for (let i = 0; i < coords.length - 1; i++) {
+                const d = getDistance(coords[i], coords[i + 1]);
+                segDists.push(d);
+                totalDist += d;
             }
+
+            const baseDuration = (totalDist / 0.001) * 50 / speedFactor; // ms
+            let startTime = null;
+            let delayDone = false;
+
+            const animObj = { raf: null };
+            vehicleAnimations.push(animObj);
+
+            function step(timestamp) {
+                if (!delayDone) {
+                    if (!startTime) startTime = timestamp;
+                    if (timestamp - startTime < delay) {
+                        animObj.raf = requestAnimationFrame(step);
+                        return;
+                    }
+                    delayDone = true;
+                    startTime = timestamp;
+                }
+
+                const elapsed = timestamp - startTime;
+                const totalTime = baseDuration;
+                let progress = (elapsed % (totalTime * 2)) / totalTime; // ping pong
+
+                let goingForward = true;
+                if (progress > 1) {
+                    progress = 2 - progress; // reverse
+                    goingForward = false;
+                }
+
+                // Find position along path
+                const targetDist = progress * totalDist;
+                let accumulated = 0;
+                let pos = coords[0];
+
+                for (let i = 0; i < segDists.length; i++) {
+                    if (accumulated + segDists[i] >= targetDist) {
+                        const segProgress = (targetDist - accumulated) / segDists[i];
+                        const lat = coords[i][0] + (coords[i + 1][0] - coords[i][0]) * segProgress;
+                        const lng = coords[i][1] + (coords[i + 1][1] - coords[i][1]) * segProgress;
+                        pos = [lat, lng];
+                        break;
+                    }
+                    accumulated += segDists[i];
+                }
+
+                marker.setLatLng(pos);
+                animObj.raf = requestAnimationFrame(step);
+            }
+
+            animObj.raf = requestAnimationFrame(step);
+        }
+
+        function getDistance(c1, c2) {
+            return Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2));
+        }
+
+        function pulseSignal(marker) {
+            let growing = true;
+            let radius = 10;
+            setInterval(() => {
+                radius += growing ? 0.5 : -0.5;
+                if (radius >= 14) growing = false;
+                if (radius <= 8) growing = true;
+                marker.setRadius(radius);
+            }, 100);
         }
 
         // ==========================================
         // INTERSECTION DETAIL
         // ==========================================
-        function openIntersectionDetail(int) {
+        function openIntersectionDetail(inter) {
             const panel = document.getElementById('intersection-detail');
-            document.getElementById('id-name').textContent = '🚦 ' + int.name;
+            document.getElementById('id-title').textContent = '🚦 ' + inter.name;
+            document.getElementById('id-wait').textContent = inter.wait + 's';
+            document.getElementById('id-flow').textContent = inter.flow;
+            document.getElementById('id-peds').textContent = Math.floor(Math.random() * 40 + 10);
 
-            const nsWait = Math.floor(Math.random() * 20 + 5);
-            const ewWait = Math.floor(Math.random() * 15 + 3);
-            const cycleTime = Math.floor(Math.random() * 30 + 30);
-            const avgWait = Math.floor(Math.random() * 20 + 8);
+            const aiDecisions = ['Extend Green +8s', 'Switch to NS flow', 'Prioritize Bus Lane', 'Emergency Override', 'Green Wave Active'];
+            document.getElementById('id-ai').textContent = aiDecisions[Math.floor(Math.random() * aiDecisions.length)];
 
-            document.getElementById('ids-ns').textContent = nsWait;
-            document.getElementById('ids-ew').textContent = ewWait;
-            document.getElementById('ids-cycle').textContent = cycleTime + 's';
-            document.getElementById('ids-wait').textContent = avgWait + 's';
+            // lights
+            const lights = ['🔴', '🟢', '🟡'];
+            document.getElementById('mil-n').textContent = lights[Math.floor(Math.random() * 2)];
+            document.getElementById('mil-s').textContent = lights[Math.floor(Math.random() * 2)];
+            document.getElementById('mil-e').textContent = lights[Math.floor(Math.random() * 2)];
+            document.getElementById('mil-w').textContent = lights[Math.floor(Math.random() * 2)];
 
-            const decisions = [
-                'Extend N/S +8s',
-                'Extend E/W +5s',
-                'Shorten cycle -4s',
-                'Priority: Emergency',
-                'Green wave active',
-                'Pedestrian phase +3s',
-                'Balanced mode'
-            ];
-            document.getElementById('ids-decision').textContent = decisions[Math.floor(Math.random() * decisions.length)];
-
-            // Mini chart
-            const chartEl = document.getElementById('mini-chart');
-            chartEl.innerHTML = '';
+            // mini chart
+            const chartContainer = document.getElementById('id-chart-bars');
+            chartContainer.innerHTML = '';
             for (let i = 0; i < 20; i++) {
-                const h = Math.floor(Math.random() * 60 + 20);
-                const isPeak = i >= 7 && i <= 10;
                 const bar = document.createElement('div');
-                bar.className = 'mc-bar' + (isPeak ? ' mc-peak' : '');
-                bar.style.height = (isPeak ? h + 20 : h) + '%';
-                chartEl.appendChild(bar);
+                const h = Math.random() * 50 + 10;
+                bar.className = 'mc-bar' + (h > 45 ? ' mc-peak' : '');
+                bar.style.height = h + 'px';
+                chartContainer.appendChild(bar);
             }
-
-            // Traffic lights
-            const nsGreen = nsWait > ewWait;
-            document.getElementById('mi-n').textContent = nsGreen ? '🟢' : '🔴';
-            document.getElementById('mi-s').textContent = nsGreen ? '🟢' : '🔴';
-            document.getElementById('mi-e').textContent = nsGreen ? '🔴' : '🟢';
-            document.getElementById('mi-w').textContent = nsGreen ? '🔴' : '🟢';
 
             panel.classList.add('open');
         }
 
-        function closeDetail() {
+        document.getElementById('id-close').addEventListener('click', () => {
             document.getElementById('intersection-detail').classList.remove('open');
-        }
+        });
 
         // ==========================================
-        // LIVE TIME
+        // MAP CONTROLS
         // ==========================================
-        function updateTime() {
+        document.querySelectorAll('.city-tab').forEach(tab => {
+            tab.addEventListener('click', () => loadCity(tab.dataset.city));
+        });
+
+        document.getElementById('map-style-select').addEventListener('change', (e) => {
+            mainMap.removeLayer(currentTileLayer);
+            currentTileLayer = tileLayers[e.target.value];
+            currentTileLayer.addTo(mainMap);
+        });
+
+        document.getElementById('tog-roads').addEventListener('click', function () {
+            showRoads = !showRoads;
+            this.classList.toggle('active');
+            roadLayers.forEach(l => showRoads ? l.addTo(mainMap) : mainMap.removeLayer(l));
+        });
+
+        document.getElementById('tog-vehicles').addEventListener('click', function () {
+            showVehicles = !showVehicles;
+            this.classList.toggle('active');
+            vehicleMarkers.forEach(m => showVehicles ? m.addTo(mainMap) : mainMap.removeLayer(m));
+        });
+
+        document.getElementById('tog-signals').addEventListener('click', function () {
+            showSignals = !showSignals;
+            this.classList.toggle('active');
+            signalMarkers.forEach(m => showSignals ? m.addTo(mainMap) : mainMap.removeLayer(m));
+        });
+
+        function updateClock() {
             const now = new Date();
-            document.getElementById('mot-time').textContent = now.toLocaleTimeString('fr-FR');
+            document.getElementById('overlay-time').textContent = '🕐 ' + now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         }
-        setInterval(updateTime, 1000);
-        updateTime();
 
         // ==========================================
         // LIVE COUNTERS
         // ==========================================
-        let carCount = 847230;
-        let co2Count = 5820;
-        let hourCount = 12450;
-
-        function animateCounters() {
-            carCount += Math.floor(Math.random() * 15 + 5);
-            co2Count += Math.floor(Math.random() * 3 + 1);
-            hourCount += Math.floor(Math.random() * 2 + 1);
-            document.getElementById('lc-cars').textContent = carCount.toLocaleString();
-            document.getElementById('lc-co2').textContent = co2Count.toLocaleString();
-            document.getElementById('lc-hours').textContent = hourCount.toLocaleString();
+        function animateCounter(id, target, suffix = '') {
+            let current = 0;
+            const step = target / 80;
+            const el = document.getElementById(id);
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) { current = target; clearInterval(interval); }
+                el.textContent = Math.floor(current).toLocaleString() + suffix;
+            }, 30);
         }
-        setInterval(animateCounters, 2000);
-        animateCounters();
 
-        // ==========================================
-        // DYNAMIC STATS
-        // ==========================================
-        setInterval(() => {
-            const city = cities[currentCity];
-            const baseVehicles = parseInt(city.vehicles.replace(/,/g, ''));
-            const newV = baseVehicles + Math.floor(Math.random() * 200 - 100);
-            document.getElementById('cs-vehicles').textContent = newV.toLocaleString();
-            document.getElementById('cs-adjustments').textContent = (city.adjustments + Math.floor(Math.random() * 20 - 10)).toLocaleString();
-        }, 3000);
-
-        // ==========================================
-        // DYNAMIC ROAD COLORS
-        // ==========================================
-        setInterval(() => {
-            const city = cities[currentCity];
-            const colors = ['#00e676', '#ffeb3b', '#ff9800', '#f44336'];
-            roadLayer.eachLayer(layer => {
-                if (layer.setStyle && Math.random() < 0.15) {
-                    const newColor = colors[Math.floor(Math.random() * colors.length)];
-                    layer.setStyle({ color: newColor });
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter('lc-optimized', 24850);
+                    animateCounter('lc-vehicles', 1284700);
+                    animateCounter('lc-co2', 142, 't');
+                    counterObserver.disconnect();
                 }
             });
-        }, 5000);
+        });
+        const dashSection = document.getElementById('dashboard');
+        if (dashSection) counterObserver.observe(dashSection);
 
         // ==========================================
-        // DYNAMIC ALERTS
+        // ALERTS
         // ==========================================
         const alertMessages = [
             { type: 'alert-warning', msg: '🚧 Accident detected on Bd Périphérique' },
-            { type: 'alert-success', msg: '✅ AI rerouted 520 vehicles successfully' },
+            { type: 'alert-success', msg: '✅ AI rerouted 520 vehicles' },
             { type: 'alert-info', msg: '🔄 16 signals optimized this minute' },
             { type: 'alert-danger', msg: '🚨 Emergency vehicle priority activated' },
             { type: 'alert-success', msg: '✅ Congestion cleared on Rue de Rivoli' },
-            { type: 'alert-info', msg: '📊 Traffic prediction updated for next 30 min' },
-            { type: 'alert-warning', msg: '🚧 Road work detected — rerouting traffic' },
-            { type: 'alert-success', msg: '✅ Green wave active on Bd Lundy' },
-            { type: 'alert-info', msg: '🔄 Pedestrian flow optimization engaged' },
+            { type: 'alert-info', msg: '📊 Prediction updated for next 30 min' },
+            { type: 'alert-warning', msg: '🚧 Road work detected — rerouting' },
+            { type: 'alert-success', msg: '✅ Green wave on Bd Lundy' }
         ];
 
         setInterval(() => {
             const container = document.getElementById('alerts-container');
             const alert = alertMessages[Math.floor(Math.random() * alertMessages.length)];
             const div = document.createElement('div');
-            div.className = 'alert-item ' + alert.type + ' new-alert';
+            div.className = 'alert-item ' + alert.type;
             div.textContent = alert.msg;
             container.insertBefore(div, container.firstChild);
-
-            // Keep max 6
-            while (container.children.length > 6) {
-                container.removeChild(container.lastChild);
-            }
+            while (container.children.length > 6) container.removeChild(container.lastChild);
         }, 8000);
 
         // ==========================================
-        // INIT
         // ==========================================
-        window.addEventListener('load', initMap);
+        // SANDBOX
+        // ==========================================
+        // ==========================================
+        let sandboxMap;
+        let sbTool = 'road';
+        let sbRoads = [];
+        let sbLights = [];
+        let sbCars = [];
+        let sbCarAnimations = [];
+        let sbDrawingRoad = false;
+        let sbCurrentRoadCoords = [];
+        let sbCurrentPolyline = null;
+        let sbIsPlaying = false;
+        let sbMode = 'ai';
+        let sbSimInterval = null;
+        let sbSimTick = 0;
+
+        function initSandbox() {
+            sandboxMap = L.map('sandbox-map', { zoomControl: true, attributionControl: false });
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19
+            }).addTo(sandboxMap);
+            sandboxMap.setView([48.8566, 2.3522], 15);
+
+            // Click handler
+            sandboxMap.on('click', onSandboxClick);
+            sandboxMap.on('mousemove', onSandboxMouseMove);
+
+            // Tool buttons
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    sbTool = btn.dataset.tool;
+
+                    // Finish road if switching away
+                    if (sbTool !== 'road' && sbDrawingRoad) {
+                        finishRoad();
+                    }
+
+                    updateSandboxInfo();
+                });
+            });
+
+            // Sliders
+            document.getElementById('density-slider').addEventListener('input', (e) => {
+                document.getElementById('density-val').textContent = e.target.value;
+            });
+            document.getElementById('speed-slider').addEventListener('input', (e) => {
+                document.getElementById('speed-val').textContent = e.target.value + ' km/h';
+            });
+
+            // Mode toggles
+            document.getElementById('mode-ai').addEventListener('click', () => {
+                sbMode = 'ai';
+                document.getElementById('mode-ai').classList.add('active');
+                document.getElementById('mode-traditional').classList.remove('active');
+            });
+            document.getElementById('mode-traditional').addEventListener('click', () => {
+                sbMode = 'traditional';
+                document.getElementById('mode-traditional').classList.add('active');
+                document.getElementById('mode-ai').classList.remove('active');
+            });
+
+            // Sim controls
+            document.getElementById('sandbox-play').addEventListener('click', startSandboxSim);
+            document.getElementById('sandbox-pause').addEventListener('click', pauseSandboxSim);
+            document.getElementById('sandbox-reset').addEventListener('click', resetSandbox);
+
+            // Presets
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => loadPreset(btn.dataset.preset));
+            });
+
+            // Right click to finish road
+            sandboxMap.on('contextmenu', (e) => {
+                e.originalEvent.preventDefault();
+                if (sbDrawingRoad) finishRoad();
+            });
+        }
+
+        function updateSandboxInfo() {
+            const info = document.getElementById('sandbox-info');
+            const messages = {
+                'road': '🛣️ Click on the map to place road points. Right-click to finish a road.',
+                'traffic-light': '🚦 Click on a road to place a traffic light.',
+                'car': '🚗 Click on a road to spawn a vehicle.',
+                'delete': '🗑️ Click on any element to remove it.'
+            };
+            info.textContent = messages[sbTool] || '';
+            info.style.display = 'block';
+            setTimeout(() => info.style.opacity = '0', 3000);
+            setTimeout(() => { info.style.display = 'none'; info.style.opacity = '1'; }, 3500);
+        }
+
+        function onSandboxClick(e) {
+            const latlng = e.latlng;
+
+            if (sbTool === 'road') {
+                if (!sbDrawingRoad) {
+                    sbDrawingRoad = true;
+                    sbCurrentRoadCoords = [latlng];
+                    sbCurrentPolyline = L.polyline([latlng], {
+                        color: '#00e676',
+                        weight: 6,
+                        opacity: 0.8,
+                        dashArray: '10, 10'
+                    }).addTo(sandboxMap);
+                } else {
+                    sbCurrentRoadCoords.push(latlng);
+                    sbCurrentPolyline.addLatLng(latlng);
+
+                    // Add node marker
+                    L.circleMarker(latlng, {
+                        radius: 4,
+                        fillColor: '#00e676',
+                        fillOpacity: 1,
+                        color: '#fff',
+                        weight: 1
+                    }).addTo(sandboxMap);
+                }
+            } else if (sbTool === 'traffic-light') {
+                placeTrafficLight(latlng);
+            } else if (sbTool === 'car') {
+                placeSandboxCar(latlng);
+            } else if (sbTool === 'delete') {
+                deleteSandboxElement(latlng);
+            }
+        }
+
+        function onSandboxMouseMove(e) {
+            if (sbDrawingRoad && sbCurrentPolyline) {
+                const coords = [...sbCurrentRoadCoords, e.latlng];
+                sbCurrentPolyline.setLatLngs(coords);
+            }
+        }
+
+        function finishRoad() {
+            if (sbCurrentRoadCoords.length < 2) {
+                if (sbCurrentPolyline) sandboxMap.removeLayer(sbCurrentPolyline);
+                sbDrawingRoad = false;
+                sbCurrentRoadCoords = [];
+                sbCurrentPolyline = null;
+                return;
+            }
+
+            // Create solid road
+            sandboxMap.removeLayer(sbCurrentPolyline);
+
+            const roadType = document.getElementById('road-type-select').value;
+            const weight = roadType === 'highway' ? 10 : roadType === '4lane' ? 8 : 6;
+            const color = roadType === 'highway' ? '#546e7a' : '#455a64';
+
+            const road = L.polyline(sbCurrentRoadCoords.map(c => [c.lat, c.lng]), {
+                color: color,
+                weight: weight,
+                opacity: 0.9,
+                lineCap: 'round',
+                lineJoin: 'round'
+            }).addTo(sandboxMap);
+
+            // Lane markings
+            const marking = L.polyline(sbCurrentRoadCoords.map(c => [c.lat, c.lng]), {
+                color: '#ffeb3b',
+                weight: 1,
+                opacity: 0.5,
+                dashArray: '8, 12'
+            }).addTo(sandboxMap);
+
+            const roadObj = {
+                polyline: road,
+                marking: marking,
+                coords: sbCurrentRoadCoords.map(c => [c.lat, c.lng]),
+                type: roadType,
+                trafficColor: '#00e676',
+                cars: []
+            };
+
+            sbRoads.push(roadObj);
+
+            sbDrawingRoad = false;
+            sbCurrentRoadCoords = [];
+            sbCurrentPolyline = null;
+        }
+
+        function placeTrafficLight(latlng) {
+            // Find nearest road point
+            let nearestRoad = null;
+            let minDist = Infinity;
+
+            sbRoads.forEach(road => {
+                road.coords.forEach(coord => {
+                    const d = getDistance([latlng.lat, latlng.lng], coord);
+                    if (d < minDist) {
+                        minDist = d;
+                        nearestRoad = road;
+                    }
+                });
+            });
+
+            const icon = L.divIcon({
+                html: '<span style="font-size:24px;">🚦</span>',
+                className: 'vehicle-icon',
+                iconSize: [28, 28],
+                iconAnchor: [14, 14]
+            });
+
+            const marker = L.marker(latlng, { icon: icon }).addTo(sandboxMap);
+
+            const lightObj = {
+                marker: marker,
+                latlng: latlng,
+                state: 'green', // green, red, yellow
+                timer: 0,
+                greenDuration: sbMode === 'ai' ? 0 : 30, // AI = dynamic
+                redDuration: sbMode === 'ai' ? 0 : 30,
+                nearestRoad: nearestRoad
+            };
+
+            // Add radius circle
+            const radius = L.circle(latlng, {
+                radius: 30,
+                color: '#00e676',
+                fillColor: '#00e676',
+                fillOpacity: 0.1,
+                weight: 1
+            }).addTo(sandboxMap);
+            lightObj.radius = radius;
+
+            sbLights.push(lightObj);
+
+            marker.bindTooltip('🚦 Traffic Light<br>Mode: ' + (sbMode === 'ai' ? 'AI Smart' : 'Traditional'), {
+                className: 'int-tooltip'
+            });
+        }
+
+        function placeSandboxCar(latlng) {
+            // Find nearest road
+            let nearestRoad = null;
+            let nearestSegIdx = 0;
+            let minDist = Infinity;
+
+            sbRoads.forEach(road => {
+                for (let i = 0; i < road.coords.length - 1; i++) {
+                    const mid = [
+                        (road.coords[i][0] + road.coords[i + 1][0]) / 2,
+                        (road.coords[i][1] + road.coords[i + 1][1]) / 2
+                    ];
+                    const d = getDistance([latlng.lat, latlng.lng], mid);
+                    if (d < minDist) {
+                        minDist = d;
+                        nearestRoad = road;
+                        nearestSegIdx = i;
+                    }
+                }
+            });
+
+            if (!nearestRoad) {
+                // No road nearby, place freely
+                nearestRoad = null;
+            }
+
+            const emoji = carEmojis[Math.floor(Math.random() * carEmojis.length)];
+            const icon = L.divIcon({
+                html: `<span style="font-size:18px;">${emoji}</span>`,
+                className: 'vehicle-icon',
+                iconSize: [22, 22],
+                iconAnchor: [11, 11]
+            });
+
+            const startPos = nearestRoad ? nearestRoad.coords[0] : [latlng.lat, latlng.lng];
+            const marker = L.marker(startPos, { icon: icon }).addTo(sandboxMap);
+
+            const carObj = {
+                marker: marker,
+                road: nearestRoad,
+                progress: 0,
+                speed: parseFloat(document.getElementById('speed-slider').value) / 50,
+                waiting: false,
+                waitTime: 0
+            };
+
+            sbCars.push(carObj);
+            if (nearestRoad) nearestRoad.cars.push(carObj);
+        }
+
+        function deleteSandboxElement(latlng) {
+            const clickPt = [latlng.lat, latlng.lng];
+
+            // Check lights
+            for (let i = sbLights.length - 1; i >= 0; i--) {
+                const light = sbLights[i];
+                if (getDistance(clickPt, [light.latlng.lat, light.latlng.lng]) < 0.0005) {
+                    sandboxMap.removeLayer(light.marker);
+                    if (light.radius) sandboxMap.removeLayer(light.radius);
+                    sbLights.splice(i, 1);
+                    return;
+                }
+            }
+
+            // Check cars
+            for (let i = sbCars.length - 1; i >= 0; i--) {
+                const car = sbCars[i];
+                const pos = car.marker.getLatLng();
+                if (getDistance(clickPt, [pos.lat, pos.lng]) < 0.0005) {
+                    sandboxMap.removeLayer(car.marker);
+                    sbCars.splice(i, 1);
+                    return;
+                }
+            }
+
+            // Check roads
+            for (let i = sbRoads.length - 1; i >= 0; i--) {
+                const road = sbRoads[i];
+                for (let j = 0; j < road.coords.length; j++) {
+                    if (getDistance(clickPt, road.coords[j]) < 0.0008) {
+                        sandboxMap.removeLayer(road.polyline);
+                        sandboxMap.removeLayer(road.marking);
+                        // Remove cars on this road
+                        road.cars.forEach(car => sandboxMap.removeLayer(car.marker));
+                        sbCars = sbCars.filter(c => c.road !== road);
+                        sbRoads.splice(i, 1);
+                        return;
+                    }
+                }
+            }
+        }
+
+        // ==========================================
+        // SANDBOX SIMULATION
+        // ==========================================
+        function startSandboxSim() {
+            if (sbIsPlaying) return;
+            sbIsPlaying = true;
+            document.
+            document.getElementById('sandbox-play').classList.add('sim-active');
+
+            const simSpeed = parseFloat(document.getElementById('sim-speed').value);
+
+            sbSimInterval = setInterval(() => {
+                sbSimTick++;
+                updateSandboxSim(simSpeed);
+                updateSandboxStats();
+            }, 50);
+        }
+
+        function pauseSandboxSim() {
+            sbIsPlaying = false;
+            document.getElementById('sandbox-play').classList.remove('sim-active');
+            if (sbSimInterval) {
+                clearInterval(sbSimInterval);
+                sbSimInterval = null;
+            }
+        }
+
+        function resetSandbox() {
+            pauseSandboxSim();
+            sbSimTick = 0;
+
+            // Remove all elements
+            sbCars.forEach(c => sandboxMap.removeLayer(c.marker));
+            sbLights.forEach(l => {
+                sandboxMap.removeLayer(l.marker);
+                if (l.radius) sandboxMap.removeLayer(l.radius);
+            });
+            sbRoads.forEach(r => {
+                sandboxMap.removeLayer(r.polyline);
+                sandboxMap.removeLayer(r.marking);
+            });
+
+            sbCars = [];
+            sbLights = [];
+            sbRoads = [];
+            sbCarAnimations = [];
+
+            if (sbCurrentPolyline) {
+                sandboxMap.removeLayer(sbCurrentPolyline);
+                sbCurrentPolyline = null;
+            }
+            sbDrawingRoad = false;
+            sbCurrentRoadCoords = [];
+
+            // Reset stats
+            document.getElementById('sb-ai-wait').textContent = '0s';
+            document.getElementById('sb-ai-throughput').textContent = '0/min';
+            document.getElementById('sb-ai-speed').textContent = '0 km/h';
+            document.getElementById('sb-ai-co2').textContent = '0 g';
+            document.getElementById('sb-trad-wait').textContent = '0s';
+            document.getElementById('sb-trad-throughput').textContent = '0/min';
+            document.getElementById('sb-trad-speed').textContent = '0 km/h';
+            document.getElementById('sb-trad-co2').textContent = '0 g';
+            document.getElementById('sb-improvement-fill').style.width = '0%';
+            document.getElementById('sb-improvement-text').textContent = 'AI: 0% better';
+        }
+
+        function updateSandboxSim(speedMult) {
+            // Update traffic lights
+            sbLights.forEach(light => {
+                light.timer += speedMult;
+
+                if (sbMode === 'ai') {
+                    // AI mode: dynamic timing based on nearby cars
+                    const nearbyCars = countCarsNearLight(light);
+                    const greenTime = Math.max(10, Math.min(60, nearbyCars * 5 + 15));
+                    const redTime = Math.max(8, 45 - nearbyCars * 3);
+
+                    if (light.state === 'green' && light.timer > greenTime) {
+                        light.state = 'yellow';
+                        light.timer = 0;
+                        updateLightVisual(light);
+                    } else if (light.state === 'yellow' && light.timer > 3) {
+                        light.state = 'red';
+                        light.timer = 0;
+                        updateLightVisual(light);
+                    } else if (light.state === 'red' && light.timer > redTime) {
+                        light.state = 'green';
+                        light.timer = 0;
+                        updateLightVisual(light);
+                    }
+                } else {
+                    // Traditional: fixed 30s cycle
+                    if (light.state === 'green' && light.timer > 30) {
+                        light.state = 'yellow';
+                        light.timer = 0;
+                        updateLightVisual(light);
+                    } else if (light.state === 'yellow' && light.timer > 3) {
+                        light.state = 'red';
+                        light.timer = 0;
+                        updateLightVisual(light);
+                    } else if (light.state === 'red' && light.timer > 30) {
+                        light.state = 'green';
+                        light.timer = 0;
+                        updateLightVisual(light);
+                    }
+                }
+            });
+
+            // Move cars along roads
+            sbCars.forEach(car => {
+                if (!car.road) return;
+
+                const road = car.road;
+                const coords = road.coords;
+
+                // Check if near a red light
+                let mustStop = false;
+                sbLights.forEach(light => {
+                    if (light.state === 'red' || light.state === 'yellow') {
+                        const carPos = car.marker.getLatLng();
+                        const dist = getDistance([carPos.lat, carPos.lng], [light.latlng.lat, light.latlng.lng]);
+                        if (dist < 0.0004) {
+                            mustStop = true;
+                        }
+                    }
+                });
+
+                // Check car ahead
+                sbCars.forEach(otherCar => {
+                    if (otherCar === car || otherCar.road !== car.road) return;
+                    if (otherCar.progress > car.progress && otherCar.progress - car.progress < 0.05) {
+                        mustStop = true;
+                    }
+                });
+
+                if (mustStop) {
+                    car.waiting = true;
+                    car.waitTime += speedMult * 0.05;
+                    return;
+                }
+
+                car.waiting = false;
+
+                // Advance along road
+                const totalDist = getTotalRoadDist(coords);
+                const moveAmount = (car.speed * speedMult * 0.0001) / Math.max(totalDist, 0.001);
+                car.progress += moveAmount;
+
+                // Loop or bounce
+                if (car.progress >= 1) {
+                    car.progress = 0;
+                }
+
+                // Get position from progress
+                const pos = getPositionOnRoad(coords, car.progress);
+                if (pos) {
+                    car.marker.setLatLng(pos);
+                }
+            });
+
+            // Update road colors based on traffic
+            sbRoads.forEach(road => {
+                const carCount = road.cars.filter(c => !c.waiting).length;
+                const waitCount = road.cars.filter(c => c.waiting).length;
+                const ratio = road.cars.length > 0 ? waitCount / road.cars.length : 0;
+
+                let color;
+                if (ratio < 0.1) color = '#00e676';
+                else if (ratio < 0.3) color = '#ffeb3b';
+                else if (ratio < 0.6) color = '#ff9800';
+                else color = '#f44336';
+
+                road.polyline.setStyle({ color: color });
+                road.trafficColor = color;
+            });
+
+            // Auto-spawn cars based on density
+            if (sbSimTick % Math.max(5, 50 - parseInt(document.getElementById('density-slider').value) * 5) === 0) {
+                sbRoads.forEach(road => {
+                    if (road.cars.length < parseInt(document.getElementById('density-slider').value) * 2) {
+                        autoSpawnCar(road);
+                    }
+                });
+            }
+        }
+
+        function countCarsNearLight(light) {
+            let count = 0;
+            sbCars.forEach(car => {
+                const pos = car.marker.getLatLng();
+                const dist = getDistance([pos.lat, pos.lng], [light.latlng.lat, light.latlng.lng]);
+                if (dist < 0.001) count++;
+            });
+            return count;
+        }
+
+        function updateLightVisual(light) {
+            const emojis = { green: '🟢', yellow: '🟡', red: '🔴' };
+            const colors = { green: '#00e676', yellow: '#ffeb3b', red: '#f44336' };
+
+            light.marker.setIcon(L.divIcon({
+                html: `<span style="font-size:24px;">${emojis[light.state]}</span>`,
+                className: 'vehicle-icon',
+                iconSize: [28, 28],
+                iconAnchor: [14, 14]
+            }));
+
+            if (light.radius) {
+                light.radius.setStyle({
+                    color: colors[light.state],
+                    fillColor: colors[light.state]
+                });
+            }
+        }
+
+        function getTotalRoadDist(coords) {
+            let total = 0;
+            for (let i = 0; i < coords.length - 1; i++) {
+                total += getDistance(coords[i], coords[i + 1]);
+            }
+            return total;
+        }
+
+        function getPositionOnRoad(coords, progress) {
+            const totalDist = getTotalRoadDist(coords);
+            const targetDist = progress * totalDist;
+            let accumulated = 0;
+
+            for (let i = 0; i < coords.length - 1; i++) {
+                const segDist = getDistance(coords[i], coords[i + 1]);
+                if (accumulated + segDist >= targetDist) {
+                    const segProg = (targetDist - accumulated) / segDist;
+                    return [
+                        coords[i][0] + (coords[i + 1][0] - coords[i][0]) * segProg,
+                        coords[i][1] + (coords[i + 1][1] - coords[i][1]) * segProg
+                    ];
+                }
+                accumulated += segDist;
+            }
+            return coords[coords.length - 1];
+        }
+
+        function autoSpawnCar(road) {
+            const emoji = carEmojis[Math.floor(Math.random() * carEmojis.length)];
+            const icon = L.divIcon({
+                html: `<span style="font-size:16px;">${emoji}</span>`,
+                className: 'vehicle-icon',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+
+            const marker = L.marker(road.coords[0], { icon: icon }).addTo(sandboxMap);
+
+            const carObj = {
+                marker: marker,
+                road: road,
+                progress: 0,
+                speed: (parseFloat(document.getElementById('speed-slider').value) / 50) * (0.8 + Math.random() * 0.4),
+                waiting: false,
+                waitTime: 0
+            };
+
+            sbCars.push(carObj);
+            road.cars.push(carObj);
+        }
+
+        function updateSandboxStats() {
+            const totalCars = sbCars.length;
+            if (totalCars === 0) return;
+
+            const waitingCars = sbCars.filter(c => c.waiting).length;
+            const avgWait = sbCars.reduce((sum, c) => sum + c.waitTime, 0) / totalCars;
+            const movingCars = totalCars - waitingCars;
+            const avgSpeed = movingCars > 0 ? parseFloat(document.getElementById('speed-slider').value) * (movingCars / totalCars) : 0;
+            const throughput = Math.floor(movingCars * 60 / Math.max(sbSimTick * 0.05, 1));
+            const co2 = Math.floor(avgWait * totalCars * 2.3);
+
+            if (sbMode === 'ai') {
+                document.getElementById('sb-ai-wait').textContent = avgWait.toFixed(1) + 's';
+                document.getElementById('sb-ai-throughput').textContent = throughput + '/min';
+                document.getElementById('sb-ai-speed').textContent = avgSpeed.toFixed(0) + ' km/h';
+                document.getElementById('sb-ai-co2').textContent = co2 + ' g';
+
+                // Simulated traditional (worse)
+                const tradMultiplier = 1.4 + Math.random() * 0.3;
+                document.getElementById('sb-trad-wait').textContent = (avgWait * tradMultiplier).toFixed(1) + 's';
+                document.getElementById('sb-trad-throughput').textContent = Math.floor(throughput / tradMultiplier) + '/min';
+                document.getElementById('sb-trad-speed').textContent = (avgSpeed / tradMultiplier).toFixed(0) + ' km/h';
+                document.getElementById('sb-trad-co2').textContent = Math.floor(co2 * tradMultiplier) + ' g';
+
+                const improvement = Math.floor((1 - 1 / tradMultiplier) * 100);
+                document.getElementById('sb-improvement-fill').style.width = improvement + '%';
+                document.getElementById('sb-improvement-text').textContent = 'AI: ' + improvement + '% better';
+            } else {
+                document.getElementById('sb-trad-wait').textContent = avgWait.toFixed(1) + 's';
+                document.getElementById('sb-trad-throughput').textContent = throughput + '/min';
+                document.getElementById('sb-trad-speed').textContent = avgSpeed.toFixed(0) + ' km/h';
+                document.getElementById('sb-trad-co2').textContent = co2 + ' g';
+
+                // Simulated AI (better)
+                const aiMultiplier = 0.6 + Math.random() * 0.15;
+                document.getElementById('sb-ai-wait').textContent = (avgWait * aiMultiplier).toFixed(1) + 's';
+                document.getElementById('sb-ai-throughput').textContent = Math.floor(throughput / aiMultiplier) + '/min';
+                document.getElementById('sb-ai-speed').textContent = (avgSpeed / aiMultiplier).toFixed(0) + ' km/h';
+                document.getElementById('sb-ai-co2').textContent = Math.floor(co2 * aiMultiplier) + ' g';
+
+                const improvement = Math.floor((1 - aiMultiplier) * 100);
+                document.getElementById('sb-improvement-fill').style.width = improvement + '%';
+                document.getElementById('sb-improvement-text').textContent = 'AI: ' + improvement + '% better';
+            }
+        }
+
+        // ==========================================
+        // PRESETS
+        // ==========================================
+        function loadPreset(preset) {
+            resetSandbox();
+
+            const center = sandboxMap.getCenter();
+            const lat = center.lat;
+            const lng = center.lng;
+
+            if (preset === 'simple') {
+                // Simple crossroads
+                const roadH = [
+                    [lat, lng - 0.004],
+                    [lat, lng - 0.001],
+                    [lat, lng + 0.001],
+                    [lat, lng + 0.004]
+                ];
+                const roadV = [
+                    [lat - 0.003, lng],
+                    [lat - 0.001, lng],
+                    [lat + 0.001, lng],
+                    [lat + 0.003, lng]
+                ];
+
+                createPresetRoad(roadH, '4lane');
+                createPresetRoad(roadV, '4lane');
+
+                // Traffic light at intersection
+                placeTrafficLight(L.latLng(lat + 0.0002, lng + 0.0002));
+                placeTrafficLight(L.latLng(lat - 0.0002, lng - 0.0002));
+
+                // Cars
+                for (let i = 0; i < 6; i++) {
+                    autoSpawnCar(sbRoads[0]);
+                    autoSpawnCar(sbRoads[1]);
+                }
+
+            } else if (preset === 'roundabout') {
+                // Roundabout
+                const steps = 16;
+                const radius = 0.001;
+                const roundCoords = [];
+                for (let i = 0; i <= steps; i++) {
+                    const angle = (i / steps) * Math.PI * 2;
+                    roundCoords.push([
+                        lat + Math.sin(angle) * radius,
+                        lng + Math.cos(angle) * radius * 1.5
+                    ]);
+                }
+                createPresetRoad(roundCoords, '2lane');
+
+                // Entry roads
+                createPresetRoad([[lat, lng - 0.005], [lat, lng - 0.001 * 1.5]], '2lane');
+                createPresetRoad([[lat, lng + 0.001 * 1.5], [lat, lng + 0.005]], '2lane');
+                createPresetRoad([[lat - 0.004, lng], [lat - 0.001, lng]], '2lane');
+                createPresetRoad([[lat + 0.001, lng], [lat + 0.004, lng]], '2lane');
+
+                // Cars
+                sbRoads.forEach(road => {
+                    for (let i = 0; i < 3; i++) autoSpawnCar(road);
+                });
+
+            } else if (preset === 'grid') {
+                // City grid
+                const gridSize = 4;
+                const spacing = 0.002;
+                const startLat = lat - spacing * (gridSize / 2);
+                const startLng = lng - spacing * (gridSize / 2);
+
+                // Horizontal roads
+                for (let i = 0; i < gridSize; i++) {
+                    const y = startLat + i * spacing;
+                    createPresetRoad([
+                        [y, startLng],
+                        [y, startLng + spacing],
+                        [y, startLng + spacing * 2],
+                        [y, startLng + spacing * 3]
+                    ], '2lane');
+                }
+
+                // Vertical roads
+                for (let j = 0; j < gridSize; j++) {
+                    const x = startLng + j * spacing;
+                    createPresetRoad([
+                        [startLat, x],
+                        [startLat + spacing, x],
+                        [startLat + spacing * 2, x],
+                        [startLat + spacing * 3, x]
+                    ], '2lane');
+                }
+
+                // Traffic lights at intersections
+                for (let i = 1; i < gridSize - 1; i++) {
+                    for (let j = 1; j < gridSize - 1; j++) {
+                        placeTrafficLight(L.latLng(startLat + i * spacing, startLng + j * spacing));
+                    }
+                }
+
+                // Cars
+                sbRoads.forEach(road => {
+                    for (let i = 0; i < 2; i++) autoSpawnCar(road);
+                });
+
+            } else if (preset === 'highway') {
+                // Highway with exit
+                createPresetRoad([
+                    [lat, lng - 0.008],
+                    [lat, lng - 0.004],
+                    [lat, lng],
+                    [lat, lng + 0.004],
+                    [lat, lng + 0.008]
+                ], 'highway');
+
+                // Exit ramp
+                createPresetRoad([
+                    [lat, lng + 0.001],
+                    [lat + 0.0008, lng + 0.002],
+                    [lat + 0.002, lng + 0.0025],
+                    [lat + 0.003, lng + 0.0025]
+                ], '2lane');
+
+                // City road at exit
+                createPresetRoad([
+                    [lat + 0.003, lng - 0.002],
+                    [lat + 0.003, lng],
+                    [lat + 0.003, lng + 0.0025],
+                    [lat + 0.003, lng + 0.005]
+                ], '4lane');
+
+                placeTrafficLight(L.latLng(lat + 0.003, lng + 0.0025));
+
+                // Cars
+                for (let i = 0; i < 10; i++) autoSpawnCar(sbRoads[0]);
+                for (let i = 0; i < 4; i++) autoSpawnCar(sbRoads[1]);
+                for (let i = 0; i < 5; i++) autoSpawnCar(sbRoads[2]);
+            }
+        }
+
+        function createPresetRoad(coords, type) {
+            const weight = type === 'highway' ? 10 : type === '4lane' ? 8 : 6;
+            const color = type === 'highway' ? '#546e7a' : '#455a64';
+
+            const road = L.polyline(coords, {
+                color: color,
+                weight: weight,
+                opacity: 0.9,
+                lineCap: 'round',
+                lineJoin: 'round'
+            }).addTo(sandboxMap);
+
+            const marking = L.polyline(coords, {
+                color: '#ffeb3b',
+                weight: 1,
+                opacity: 0.5,
+                dashArray: '8, 12'
+            }).addTo(sandboxMap);
+
+            const roadObj = {
+                polyline: road,
+                marking: marking,
+                coords: coords,
+                type: type,
+                trafficColor: '#00e676',
+                cars: []
+            };
+
+            sbRoads.push(roadObj);
+        }
+
+        // ==========================================
+        // INIT ALL
+        // ==========================================
+        window.addEventListener('load', () => {
+            initMap();
+            initSandbox();
+            updateClock();
+            setInterval(updateClock, 30000);
+
+            // Stats auto update
+            setInterval(() => {
+                const base = cityData[currentCity];
+                document.getElementById('stat-vehicles').textContent = (base.vehicles + Math.floor(Math.random() * 200 - 100)).toLocaleString();
+                document.getElementById('stat-speed').textContent = (base.speed + Math.floor(Math.random() * 6 - 3)) + ' km/h';
+                document.getElementById('stat-incidents').textContent = Math.floor(Math.random() * 6 + 1);
+            }, 5000);
+        });
     </script>
 
 </body>
