@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartFlow - Reduce Urban Traffic Congestion</title>
+    <title>SmartFlow - AI Traffic Management</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,162 +12,735 @@
     <nav class="navbar">
         <div class="logo">🚦 SmartFlow</div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#problem">Problem</a></li>
-            <li><a href="#solutions">Solutions</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#impact">Impact</a></li>
-            <li><a href="#prototype">Prototype</a></li>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#simulation">Live Simulation</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#features">Features</a></li>
         </ul>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     </nav>
 
     <!-- HERO -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Reimagining Urban Mobility</h1>
-            <p class="subtitle">How might we reduce traffic congestion in densely populated cities?</p>
-            <p class="tagline">SmartFlow combines AI-powered traffic lights, carpooling incentives, and micro-mobility into one unified platform.</p>
-            <a href="#solutions" class="cta-btn">Discover Our Solutions</a>
-        </div>
-        <div class="hero-visual">
-            <div class="city-animation">
-                <div class="building b1"></div>
-                <div class="building b2"></div>
-                <div class="building b3"></div>
-                <div class="building b4"></div>
-                <div class="building b5"></div>
-                <div class="road">
-                    <div class="car car1">🚗</div>
-                    <div class="car car2">🚙</div>
-                    <div class="car car3">🛴</div>
-                    <div class="car car4">🚲</div>
-                </div>
-                <div class="traffic-light">
-                    <div class="light red"></div>
-                    <div class="light yellow"></div>
-                    <div class="light green active-light"></div>
-                </div>
-            </div>
-        </div>
+    <section id="hero" class="hero">
+        <h1>AI-Powered Traffic Management</h1>
+        <p>Real-time adaptive traffic lights that learn, predict, and optimize city traffic flow.</p>
+        <a href="#simulation" class="cta-btn">See It In Action ↓</a>
     </section>
 
-    <!-- PROBLEM SECTION -->
-    <section id="problem" class="section problem-section">
-        <h2>🔍 The Problem</h2>
-        <div class="problem-grid">
-            <div class="problem-card">
-                <div class="problem-icon">⏱️</div>
-                <h3>Time Wasted</h3>
-                <p>Urban commuters lose an average of <strong>54 hours per year</strong> stuck in traffic. That's over 2 full days of life wasted annually.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">🌍</div>
-                <h3>CO₂ Emissions</h3>
-                <p>Traffic congestion contributes to <strong>29% of greenhouse gas emissions</strong> in urban areas, accelerating climate change.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">💸</div>
-                <h3>Economic Cost</h3>
-                <p>Congestion costs the global economy over <strong>$1 trillion annually</strong> in lost productivity and fuel waste.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">😤</div>
-                <h3>Quality of Life</h3>
-                <p>Noise pollution, stress, and reduced accessibility hurt the <strong>mental and physical health</strong> of millions of city dwellers.</p>
-            </div>
-        </div>
-        <div class="empathy-box">
-            <h3>📋 Empathy Research Summary</h3>
-            <p>We conducted <strong>15 interviews</strong> with daily commuters in Paris, Lyon, and Reims. Key insights:</p>
-            <ul>
-                <li>"I'd carpool but I never know who's going my way at the same time."</li>
-                <li>"Traffic lights seem random — green when no one's there, red when the road is packed."</li>
-                <li>"I'd use a scooter for short trips but I don't know where to find one reliably."</li>
-                <li>"There's no single app that shows me the best option for my commute right now."</li>
-            </ul>
-        </div>
-    </section>
+    <!-- MAIN SIMULATION -->
+    <section id="simulation" class="section">
+        <h2>🔴🟡🟢 Live Intersection Simulation</h2>
+        <p class="section-sub">Watch the AI detect vehicle density and adapt signal timing in real time</p>
 
-    <!-- DEFINITION -->
-    <section class="section definition-section">
-        <h2>🎯 Problem Definition</h2>
-        <div class="definition-card">
-            <p class="hmw">"How might we reduce traffic congestion in densely populated cities by offering commuters smarter, real-time, multi-modal alternatives?"</p>
-        </div>
-        <div class="persona-grid">
-            <div class="persona-card">
-                <div class="persona-avatar">👩‍💼</div>
-                <h3>Sophie, 32</h3>
-                <p class="persona-role">Marketing Manager, Paris</p>
-                <p>Drives 45 min to work (should take 20). Frustrated by unpredictable traffic. Open to alternatives but needs reliability.</p>
-            </div>
-            <div class="persona-card">
-                <div class="persona-avatar">👨‍🎓</div>
-                <h3>Karim, 24</h3>
-                <p class="persona-role">Student, Lyon</p>
-                <p>Uses public transit + e-scooter. Wants a single app to plan multi-modal routes. Budget-conscious.</p>
-            </div>
-        </div>
-    </section>
+        <div class="sim-container">
+            <!-- CONTROLS -->
+            <div class="sim-controls">
+                <h3>⚙️ AI Control Panel</h3>
 
-    <!-- SOLUTIONS -->
-    <section id="solutions" class="section solutions-section">
-        <h2>💡 Our 3 Solutions</h2>
-        <p class="section-subtitle">Ideation phase: we brainstormed 12 ideas and converged on 3 complementary pillars.</p>
-        <div class="solutions-grid">
-            <div class="solution-card" id="sol1">
-                <div class="solution-header">
-                    <span class="solution-number">01</span>
-                    <div class="solution-icon">🤖</div>
+                <div class="control-group">
+                    <label>Traffic Mode</label>
+                    <div class="btn-group">
+                        <button class="mode-btn active" onclick="setMode('auto')">🤖 AI Auto</button>
+                        <button class="mode-btn" onclick="setMode('manual')">🖐 Manual</button>
+                        <button class="mode-btn" onclick="setMode('rush')">🔥 Rush Hour</button>
+                    </div>
                 </div>
-                <h3>Smart Traffic Lights</h3>
-                <p>AI-powered traffic signals that adapt in real-time to traffic flow using sensors and camera data. Reduces average wait time by up to 40%.</p>
-                <ul class="feature-list">
-                    <li>✅ Real-time density detection</li>
-                    <li>✅ Emergency vehicle priority</li>
-                    <li>✅ Pedestrian-aware timing</li>
-                    <li>✅ Connected corridor sync</li>
-                </ul>
-                <div class="solution-demo">
-                    <h4>Live Simulation</h4>
-                    <div class="traffic-sim">
-                        <div class="sim-road">
-                            <div class="sim-lane" id="lane-ns">
-                                <div class="sim-car-v">🚗</div>
-                                <div class="sim-car-v delay1">🚙</div>
-                            </div>
-                            <div class="sim-intersection">
-                                <div class="sim-light-container">
-                                    <div class="sim-light-dot sim-red" id="light-ns"></div>
-                                    <div class="sim-light-dot sim-green" id="light-ew"></div>
-                                </div>
-                            </div>
-                            <div class="sim-lane-h" id="lane-ew">
-                                <div class="sim-car-h">🚗</div>
-                                <div class="sim-car-h delay2">🚕</div>
-                                <div class="sim-car-h delay3">🚗</div>
-                            </div>
-                        </div>
-                        <p class="sim-status">AI detected: <strong>Heavy East-West traffic</strong> → Green extended ✅</p>
+
+                <div class="control-group">
+                    <label>Spawn Rate — North/South</label>
+                    <input type="range" id="ns-rate" min="1" max="10" value="3" oninput="updateRate('ns')">
+                    <span id="ns-rate-val" class="rate-val">3 cars/cycle</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Spawn Rate — East/West</label>
+                    <input type="range" id="ew-rate" min="1" max="10" value="7" oninput="updateRate('ew')">
+                    <span id="ew-rate-val" class="rate-val">7 cars/cycle</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Simulation Speed</label>
+                    <input type="range" id="sim-speed" min="1" max="5" value="2" oninput="updateSpeed()">
+                    <span id="speed-val" class="rate-val">2x</span>
+                </div>
+
+                <button class="emergency-btn" onclick="triggerEmergency()">🚑 Emergency Vehicle</button>
+                <button class="ped-btn" onclick="triggerPedestrian()">🚶 Pedestrian Request</button>
+
+                <!-- AI LOG -->
+                <div class="ai-log">
+                    <h4>📡 AI Decision Log</h4>
+                    <div id="log-container" class="log-container">
+                        <div class="log-entry">🟢 System initialized — AI mode active</div>
                     </div>
                 </div>
             </div>
 
-            <div class="solution-card" id="sol2">
-                <div class="solution-header">
-                    <span class="solution-number">02</span>
-                    <div class="solution-icon">🚗</div>
+            <!-- INTERSECTION VIEW -->
+            <div class="sim-view">
+                <div class="intersection" id="intersection">
+                    <!-- ROADS -->
+                    <div class="road road-ns"></div>
+                    <div class="road road-ew"></div>
+
+                    <!-- LANE MARKINGS -->
+                    <div class="lane-marking lane-ns-top"></div>
+                    <div class="lane-marking lane-ns-bot"></div>
+                    <div class="lane-marking lane-ew-left"></div>
+                    <div class="lane-marking lane-ew-right"></div>
+
+                    <!-- CROSSWALKS -->
+                    <div class="crosswalk cw-north"></div>
+                    <div class="crosswalk cw-south"></div>
+                    <div class="crosswalk cw-east"></div>
+                    <div class="crosswalk cw-west"></div>
+
+                    <!-- TRAFFIC LIGHTS -->
+                    <div class="tl tl-north" id="tl-north">
+                        <div class="tl-light tl-red"></div>
+                        <div class="tl-light tl-yellow"></div>
+                        <div class="tl-light tl-green"></div>
+                    </div>
+                    <div class="tl tl-south" id="tl-south">
+                        <div class="tl-light tl-red"></div>
+                        <div class="tl-light tl-yellow"></div>
+                        <div class="tl-light tl-green"></div>
+                    </div>
+                    <div class="tl tl-east" id="tl-east">
+                        <div class="tl-light tl-red"></div>
+                        <div class="tl-light tl-yellow"></div>
+                        <div class="tl-light tl-green"></div>
+                    </div>
+                    <div class="tl tl-west" id="tl-west">
+                        <div class="tl-light tl-red"></div>
+                        <div class="tl-light tl-yellow"></div>
+                        <div class="tl-light tl-green"></div>
+                    </div>
+
+                    <!-- DETECTION ZONES -->
+                    <div class="detect-zone detect-north" id="detect-north">
+                        <span class="detect-count" id="count-north">0</span>
+                    </div>
+                    <div class="detect-zone detect-south" id="detect-south">
+                        <span class="detect-count" id="count-south">0</span>
+                    </div>
+                    <div class="detect-zone detect-east" id="detect-east">
+                        <span class="detect-count" id="count-east">0</span>
+                    </div>
+                    <div class="detect-zone detect-west" id="detect-west">
+                        <span class="detect-count" id="count-west">0</span>
+                    </div>
+
+                    <!-- CAR CONTAINER -->
+                    <div id="car-container"></div>
+
+                    <!-- PEDESTRIAN INDICATOR -->
+                    <div class="ped-indicator" id="ped-indicator">🚶</div>
+                    <!-- EMERGENCY INDICATOR -->
+                    <div class="emergency-indicator" id="emergency-indicator">🚑</div>
                 </div>
-                <h3>Carpooling Incentives</h3>
-                <p>A reward-based system that matches commuters with similar routes and schedules. Earn points for every shared ride.</p>
-                <ul class="feature-list">
-                    <li>✅ Smart route matching</li>
-                    <li>✅ Points & reward system</li>
-                    <li>✅ Corporate partnerships</li>
-                    <li>✅ Verified rider profiles</li>
-                </ul>
-                <div class="carpool-demo">
-                    <h4>Match Preview</h4>
-                    <div class="match-card">
-                        <div class="
+
+                <!-- DENSITY BAR -->
+                <div class="density-bars">
+                    <div class="density-row">
+                        <span class="dir-label">⬆ North</span>
+                        <div class="bar-track"><div class="bar-fill bar-ns" id="bar-north"></div></div>
+                        <span class="bar-val" id="bar-val-north">0</span>
+                    </div>
+                    <div class="density-row">
+                        <span class="dir-label">⬇ South</span>
+                        <div class="bar-track"><div class="bar-fill bar-ns" id="bar-south"></div></div>
+                        <span class="bar-val" id="bar-val-south">0</span>
+                    </div>
+                    <div class="density-row">
+                        <span class="dir-label">➡ East</span>
+                        <div class="bar-track"><div class="bar-fill bar-ew" id="bar-east"></div></div>
+                        <span class="bar-val" id="bar-val-east">0</span>
+                    </div>
+                    <div class="density-row">
+                        <span class="dir-label">⬅ West</span>
+                        <div class="bar-track"><div class="bar-fill bar-ew" id="bar-west"></div></div>
+                        <span class="bar-val" id="bar-val-west">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div class="sim-stats">
+                <h3>📊 Live Metrics</h3>
+                <div class="stat-card green-stat">
+                    <span class="stat-num" id="stat-throughput">0</span>
+                    <span class="stat-label">Cars Passed</span>
+                </div>
+                <div class="stat-card yellow-stat">
+                    <span class="stat-num" id="stat-avg-wait">0s</span>
+                    <span class="stat-label">Avg Wait Time</span>
+                </div>
+                <div class="stat-card red-stat">
+                    <span class="stat-num" id="stat-queue">0</span>
+                    <span class="stat-label">Total Queued</span>
+                </div>
+                <div class="stat-card blue-stat">
+                    <span class="stat-num" id="stat-efficiency">95%</span>
+                    <span class="stat-label">AI Efficiency</span>
+                </div>
+                <div class="stat-card purple-stat">
+                    <span class="stat-num" id="stat-phase">EW GREEN</span>
+                    <span class="stat-label">Current Phase</span>
+                </div>
+                <div class="stat-card orange-stat">
+                    <span class="stat-num" id="stat-timer">0s</span>
+                    <span class="stat-label">Phase Timer</span>
+                </div>
+
+                <!-- COMPARISON -->
+                <div class="comparison-box">
+                    <h4>AI vs Fixed Timing</h4>
+                    <div class="comp-row">
+                        <span>Avg Wait</span>
+                        <span class="comp-ai" id="comp-ai-wait">12s</span>
+                        <span class="comp-fixed">35s</span>
+                    </div>
+                    <div class="comp-row">
+                        <span>Throughput</span>
+                        <span class="comp-ai" id="comp-ai-tp">+42%</span>
+                        <span class="comp-fixed">baseline</span>
+                    </div>
+                    <div class="comp-row">
+                        <span>CO₂ saved</span>
+                        <span class="comp-ai">-28%</span>
+                        <span class="comp-fixed">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboard" class="section dark-section">
+        <h2>📈 City-Wide Dashboard</h2>
+        <p class="section-sub">SmartFlow monitors every intersection across the entire city network</p>
+
+        <div class="dash-grid">
+            <div class="dash-card">
+                <div class="dash-icon">🗺️</div>
+                <h3>Live City Map</h3>
+                <div class="mini-map">
+                    <div class="map-dot dot1 green-dot"></div>
+                    <div class="map-dot dot2 green-dot"></div>
+                    <div class="map-dot dot3 yellow-dot"></div>
+                    <div class="map-dot dot4 red-dot"></div>
+                    <div class="map-dot dot5 green-dot"></div>
+                    <div class="map-dot dot6 yellow-dot"></div>
+                    <div class="map-dot dot7 green-dot"></div>
+                    <div class="map-dot dot8 green-dot"></div>
+                    <div class="map-dot dot9 red-dot"></div>
+                    <div class="map-line ml1"></div>
+                    <div class="map-line ml2"></div>
+                    <div class="map-line ml3"></div>
+                    <div class="map-line ml4"></div>
+                </div>
+                <p class="map-legend">🟢 Flowing &nbsp; 🟡 Moderate &nbsp; 🔴 Congested</p>
+            </div>
+            <div class="dash-card">
+                <div class="dash-icon">⏱️</div>
+                <h3>Peak Hour Prediction</h3>
+                <div class="peak-chart">
+                    <div class="peak-bar" style="height:30%"><span>6am</span></div>
+                    <div class="peak-bar" style="height:70%"><span>7am</span></div>
+                    <div class="peak-bar peak-high" style="height:95%"><span>8am</span></div>
+                    <div class="peak-bar peak-high" style="height:90%"><span>9am</span></div>
+                    <div class="peak-bar" style="height:45%"><span>10am</span></div>
+                    <div class="peak-bar" style="height:35%"><span>11am</span></div>
+                    <div class="peak-bar" style="height:50%"><span>12pm</span></div>
+                    <div class="peak-bar" style="height:40%"><span>1pm</span></div>
+                    <div class="peak-bar" style="height:55%"><span>5pm</span></div>
+                    <div class="peak-bar peak-high" style="height:92%"><span>6pm</span></div>
+                    <div class="peak-bar" style="height:65%"><span>7pm</span></div>
+                    <div class="peak-bar" style="height:25%"><span>8pm</span></div>
+                </div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-icon">🏆</div>
+                <h3>Today's Performance</h3>
+                <div class="perf-list">
+                    <div class="perf-item">
+                        <span>Congestion reduced</span>
+                        <span class="perf-val green-text">-38%</span>
+                    </div>
+                    <div class="perf-item">
+                        <span>Avg commute time</span>
+                        <span class="perf-val green-text">-12 min</span>
+                    </div>
+                    <div class="perf-item">
+                        <span>Emergency response</span>
+                        <span class="perf-val green-text">-45s</span>
+                    </div>
+                    <div class="perf-item">
+                        <span>Fuel waste saved</span>
+                        <span class="perf-val green-text">2,400 L</span>
+                    </div>
+                    <div class="perf-item">
+                        <span>CO₂ reduction</span>
+                        <span class="perf-val green-text">5.8 tons</span>
+                    </div>
+                    <div class="perf-item">
+                        <span>Intersections online</span>
+                        <span class="perf-val blue-text">847/850</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="section">
+        <h2>🧠 How SmartFlow AI Works</h2>
+        <p class="section-sub">Four layers of intelligence working together</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-step">1</div>
+                <h3>📷 Detection</h3>
+                <p>Computer vision cameras count vehicles and classify types (cars, buses, bikes, emergency) at each approach in real time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-step">2</div>
+                <h3>🧮 Prediction</h3>
+                <p>Machine learning models predict traffic flow 5-15 minutes ahead using historical patterns, weather, and events data.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-step">3</div>
+                <h3>⚡ Optimization</h3>
+                <p>Reinforcement learning agent dynamically adjusts green time, phase order, and coordination across connected intersections.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-step">4</div>
+                <h3>🔄 Learning</h3>
+                <p>The system continuously learns from outcomes, improving efficiency over time. Every decision feeds back into the model.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>SmartFlow — Design Thinking Prototype | Reducing Urban Traffic Congestion with AI</p>
+    </footer>
+
+    <script>
+        // ========== SIMULATION ENGINE ==========
+
+        // STATE
+        let cars = [];
+        let carId = 0;
+        let throughput = 0;
+        let totalWait = 0;
+        let waitCount = 0;
+        let currentPhase = 'ew'; // 'ns' or 'ew'
+        let phaseTimer = 0;
+        let mode = 'auto';
+        let nsRate = 3;
+        let ewRate = 7;
+        let simSpeed = 2;
+        let isEmergency = false;
+        let isPedestrian = false;
+        let emergencyTimeout = null;
+        let pedTimeout = null;
+        let spawnCounter = 0;
+
+        const INTERSECTION_MIN = 200;
+        const INTERSECTION_MAX = 360;
+        const CAR_SIZE = 28;
+        const STOP_BUFFER = 15;
+        const container = document.getElementById('car-container');
+
+        const carEmojis = ['🚗','🚙','🚕','🚐','🚓','🚗','🚙','🚗'];
+        const truckEmojis = ['🚛','🚚'];
+
+        function randomCar() {
+            return Math.random() > 0.85 ? truckEmojis[Math.floor(Math.random()*truckEmojis.length)] : carEmojis[Math.floor(Math.random()*carEmojis.length)];
+        }
+
+        // DIRECTIONS: north (going down), south (going up), east (going left), west (going right)
+        function spawnCar(dir) {
+            const c = {
+                id: carId++,
+                dir: dir,
+                x: 0,
+                y: 0,
+                speed: 1.5 + Math.random() * 1,
+                waiting: false,
+                passed: false,
+                waitStart: 0,
+                emoji: randomCar()
+            };
+
+            const laneOffset = (Math.random() * 20) - 10;
+
+            switch(dir) {
+                case 'north':
+                    c.x = 260 + laneOffset;
+                    c.y = -30;
+                    break;
+                case 'south':
+                    c.x = 300 + laneOffset;
+                    c.y = 590;
+                    break;
+                case 'east':
+                    c.x = 590;
+                    c.y = 260 + laneOffset;
+                    break;
+                case 'west':
+                    c.x = -30;
+                    c.y = 300 + laneOffset;
+                    break;
+            }
+
+            const el = document.createElement('div');
+            el.className = 'sim-car';
+            el.textContent = c.emoji;
+            el.id = 'car-' + c.id;
+
+            let rot = 0;
+            if(dir === 'north') rot = 180;
+            if(dir === 'east') rot = 270;
+            if(dir === 'west') rot = 90;
+
+            el.style.transform = `rotate(${rot}deg)`;
+            container.appendChild(el);
+
+            c.el = el;
+            cars.push(c);
+        }
+
+        function getStopLine(dir) {
+            switch(dir) {
+                case 'north': return INTERSECTION_MIN - STOP_BUFFER;
+                case 'south': return INTERSECTION_MAX + STOP_BUFFER;
+                case 'east': return INTERSECTION_MAX + STOP_BUFFER;
+                case 'west': return INTERSECTION_MIN - STOP_BUFFER;
+            }
+        }
+
+        function shouldStop(car) {
+            const isNS = car.dir === 'north' || car.dir === 'south';
+            const greenForMe = (isNS && currentPhase === 'ns') || (!isNS && currentPhase === 'ew');
+            if(greenForMe) return false;
+
+            const stop = getStopLine(car.dir);
+
+            switch(car.dir) {
+                case 'north': return car.y < stop && car.y > stop - 100;
+                case 'south': return car.y > stop && car.y < stop + 100;
+                case 'east': return car.x > stop && car.x < stop + 100;
+                case 'west': return car.x < stop && car.x > stop - 100;
+            }
+            return false;
+        }
+
+        function isInQueue(car) {
+            // Check if car ahead
+            for(let other of cars) {
+                if(other.id === car.id || other.dir !== car.dir) continue;
+                const dist = car.dir === 'north' ? other.y - car.y :
+                             car.dir === 'south' ? car.y - other.y :
+                             car.dir === 'east' ? car.x - other.x :
+                             other.x - car.x;
+                if(dist > 0 && dist < CAR_SIZE + 8 && other.waiting) return true;
+            }
+            return false;
+        }
+
+        function updateCars() {
+            const toRemove = [];
+
+            for(let car of cars) {
+                const stop = shouldStop(car) || isInQueue(car);
+
+                if(stop && !car.waiting) {
+                    car.waiting = true;
+                    car.waitStart = Date.now();
+                } else if(!stop && car.waiting) {
+                    car.waiting = false;
+                    const waited = (Date.now() - car.waitStart) / 1000;
+                    totalWait += waited;
+                    waitCount++;
+                }
+
+                if(!car.waiting) {
+                    const spd = car.speed * simSpeed;
+                    switch(car.dir) {
+                        case 'north': car.y += spd; break;
+                        case 'south': car.y -= spd; break;
+                        case 'east': car.x -= spd; break;
+                        case 'west': car.x += spd; break;
+                    }
+
+                    // Check if passed intersection
+                    if(!car.passed) {
+                        const inMiddle = car.x > INTERSECTION_MIN && car.x < INTERSECTION_MAX &&
+                                        car.y > INTERSECTION_MIN && car.y < INTERSECTION_MAX;
+                        if(inMiddle) {
+                            car.passed = true;
+                            throughput++;
+                        }
+                    }
+                }
+
+                car.el.style.left = car.x + 'px';
+                car.el.style.top = car.y + 'px';
+
+                if(car.waiting) {
+                    car.el.classList.add('waiting');
+                } else {
+                    car.el.classList.remove('waiting');
+                }
+
+                // Remove if off screen
+                if(car.y > 620 || car.y < -50 || car.x > 620 || car.x < -50) {
+                    toRemove.push(car.id);
+                }
+            }
+
+            for(let id of toRemove) {
+                const idx = cars.findIndex(c => c.id === id);
+                if(idx >= 0) {
+                    cars[idx].el.remove();
+                    cars.splice(idx, 1);
+                }
+            }
+        }
+
+        function countDir(dir) {
+            return cars.filter(c => c.dir === dir && c.waiting).length;
+        }
+
+        function getTotalNS() { return countDir('north') + countDir('south'); }
+        function getTotalEW() { return countDir('east') + countDir('west'); }
+
+        // AI LOGIC
+        let aiCooldown = 0;
+        const MIN_GREEN = 40; // ticks
+        const MAX_GREEN = 200;
+
+        function aiDecision() {
+            if(mode === 'manual') return;
+
+            phaseTimer++;
+
+            if(isEmergency) return; // emergency override
+
+            const ns = getTotalNS();
+            const ew = getTotalEW();
+
+            if(mode === 'rush') {
+                // Rush hour: much more EW traffic
+                if(phaseTimer > MIN_GREEN) {
+                    if(currentPhase === 'ns' && ew > ns + 2) {
+                        switchPhase('ew', '🔥 Rush hour — heavy EW traffic detected, switching');
+                    } else if(currentPhase === 'ew' && phaseTimer > MAX_GREEN) {
+                        switchPhase('ns', '⏰ Max green reached, rotating to NS');
+                    }
+                }
+                return;
+            }
+
+            // Auto AI mode
+            if(phaseTimer > MIN_GREEN) {
+                const otherQueue = currentPhase === 'ns' ? ew : ns;
+                const myQueue = currentPhase === 'ns' ? ns : ew;
+
+                if(otherQueue > myQueue + 3) {
+                    const newPhase = currentPhase === 'ns' ? 'ew' : 'ns';
+                    switchPhase(newPhase, `🧠 AI detected ${otherQueue} cars queued on ${newPhase.toUpperCase()} vs ${myQueue} — switching`);
+                } else if(phaseTimer > MAX_GREEN && otherQueue > 0) {
+                    const newPhase = currentPhase === 'ns' ? 'ew' : 'ns';
+                    switchPhase(newPhase, `⏰ Max green time reached — rotating to ${newPhase.toUpperCase()}`);
+                }
+            }
+        }
+
+        function switchPhase(newPhase, reason) {
+            currentPhase = newPhase;
+            phaseTimer = 0;
+            updateLights();
+            addLog(reason);
+        }
+
+        function updateLights() {
+            const nsGreen = currentPhase === 'ns';
+            setLight('tl-north', nsGreen ? 'green' : 'red');
+            setLight('tl-south', nsGreen ? 'green' : 'red');
+            setLight('tl-east', nsGreen ? 'red' : 'green');
+            setLight('tl-west', nsGreen ? 'red' : 'green');
+        }
+
+        function setLight(id, color) {
+            const el = document.getElementById(id);
+            el.querySelectorAll('.tl-light').forEach(l => l.classList.remove('on'));
+            if(color === 'green') el.querySelector('.tl-green').classList.add('on');
+            if(color === 'red') el.querySelector('.tl-red').classList.add('on');
+            if(color === 'yellow') el.querySelector('.tl-yellow').classList.add('on');
+        }
+
+        function updateStats() {
+            document.getElementById('stat-throughput').textContent = throughput;
+            const avg = waitCount > 0 ? (totalWait / waitCount).toFixed(1) : 0;
+            document.getElementById('stat-avg-wait').textContent = avg + 's';
+            document.getElementById('comp-ai-wait').textContent = avg + 's';
+
+            const total = cars.filter(c => c.waiting).length;
+            document.getElementById('stat-queue').textContent = total;
+
+            const eff = Math.max(60, 99 - total * 2);
+            document.getElementById('stat-efficiency').textContent = eff + '%';
+            document.getElementById('stat-phase').textContent = currentPhase.toUpperCase() + ' GREEN';
+            document.getElementById('stat-timer').textContent = Math.floor(phaseTimer / 20) + 's';
+
+            const tp = throughput > 10 ? '+' + Math.floor((throughput / (throughput + total + 1)) * 60) + '%' : '...';
+            document.getElementById('comp-ai-tp').textContent = tp;
+
+            // Density bars
+            ['north','south','east','west'].forEach(dir => {
+                const cnt = countDir(dir);
+                document.getElementById('bar-' + dir).style.width = Math.min(cnt * 12, 100) + '%';
+                document.getElementById('bar-val-' + dir).textContent = cnt;
+                document.getElementById('count-' + dir).textContent = cnt;
+            });
+        }
+
+        // SPAWN
+        function spawnWave() {
+            spawnCounter++;
+            if(spawnCounter % Math.max(1, Math.floor(6 / simSpeed)) !== 0) return;
+
+            const nsChance = nsRate / 10;
+            const ewChance = ewRate / 10;
+
+            if(Math.random() < nsChance) spawnCar('north');
+            if(Math.random() < nsChance) spawnCar('south');
+            if(Math.random() < ewChance) spawnCar('east');
+            if(Math.random() < ewChance) spawnCar('west');
+        }
+
+        // CONTROLS
+        function setMode(m) {
+            mode = m;
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if(m === 'rush') {
+                document.getElementById('ew-rate').value = 9;
+                document.getElementById('ns-rate').value = 3;
+                ewRate = 9; nsRate = 3;
+                document.getElementById('ew-rate-val').textContent = '9 cars/cycle';
+                document.getElementById('ns-rate-val').textContent = '3 cars/cycle';
+                addLog('🔥 Rush hour mode activated — heavy EW traffic simulated');
+            } else if(m === 'auto') {
+                addLog('🤖 AI auto mode re-engaged');
+            } else {
+                addLog('🖐 Manual mode — AI paused, use sliders to control');
+            }
+        }
+
+        function updateRate(dir) {
+            if(dir === 'ns') {
+                nsRate = parseInt(document.getElementById('ns-rate').value);
+                document.getElementById('ns-rate-val').textContent = nsRate + ' cars/cycle';
+            } else {
+                ewRate = parseInt(document.getElementById('ew-rate').value);
+                document.getElementById('ew-rate-val').textContent = ewRate + ' cars/cycle';
+            }
+        }
+
+        function updateSpeed() {
+            simSpeed = parseInt(document.getElementById('sim-speed').value);
+            document.getElementById('speed-val').textContent = simSpeed + 'x';
+        }
+
+        function triggerEmergency() {
+            if(isEmergency) return;
+            isEmergency = true;
+
+            const el = document.getElementById('emergency-indicator');
+            el.classList.add('active');
+
+            // Force all green for NS (emergency comes from north)
+            currentPhase = 'ns';
+            phaseTimer = 0;
+            updateLights();
+            addLog('🚑 EMERGENCY VEHICLE DETECTED — All NS lights GREEN, clearing path');
+
+            // Spawn emergency vehicle
+            const ec = {
+                id: carId++, dir: 'north', x: 265, y: -30,
+                speed: 3, waiting: false, passed: false, waitStart: 0, emoji: '🚑'
+            };
+            const eel = document.createElement('div');
+            eel.className = 'sim-car emergency-car';
+            eel.textContent = '🚑';
+            eel.style.transform = 'rotate(180deg)';
+            container.appendChild(eel);
+            ec.el = eel;
+            cars.push(ec);
+
+            emergencyTimeout = setTimeout(() => {
+                isEmergency = false;
+                el.classList.remove('active');
+                addLog('🚑 Emergency vehicle passed — resuming AI control');
+            }, 6000);
+        }
+
+        function triggerPedestrian() {
+            if(isPedestrian) return;
+            isPedestrian = true;
+
+            const el = document.getElementById('ped-indicator');
+            el.classList.add('active');
+            addLog('🚶 Pedestrian crossing requested — extending all-red phase 3s');
+
+            // Brief all-red
+            setLight('tl-north', 'red');
+            setLight('tl-south', 'red');
+            setLight('tl-east', 'red');
+            setLight('tl-west', 'red');
+
+            pedTimeout = setTimeout(() => {
+                isPedestrian = false;
+                el.classList.remove('active');
+                updateLights();
+                addLog('🚶 Pedestrian crossed safely — lights resumed');
+            }, 3000);
+        }
+
+        function addLog(msg) {
+            const lc = document.getElementById('log-container');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry new-log';
+            const time = new Date().toLocaleTimeString();
+            entry.textContent = `[${time}] ${msg}`;
+            lc.prepend(entry);
+
+            if(lc.children.length > 20) lc.removeChild(lc.lastChild);
+        }
+
+        // MAIN LOOP
+        updateLights();
+
+        function gameLoop() {
+            spawnWave();
+            updateCars();
+            aiDecision();
+            updateStats();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+
+        // MENU TOGGLE (mobile)
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        }
+    </script>
+
+</body>
+</html>
