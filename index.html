@@ -6,6 +6,7 @@
     <title>SmartFlow - AI Traffic Management</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -25,14 +26,11 @@
 
     <!-- HERO -->
     <section id="hero" class="hero">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="" type="video/mp4">
-        </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-badge">AI-Powered Urban Mobility</div>
             <h1>SmartFlow</h1>
-            <p class="hero-sub">Intelligent traffic management that adapts to your city in real time. Reducing congestion, saving time, cutting emissions.</p>
+            <p class="hero-sub">Intelligent traffic management for French cities. Real-time adaptive signals powered by AI.</p>
             <div class="hero-stats-row">
                 <div class="hero-stat">
                     <span class="hs-num">-38%</span>
@@ -58,13 +56,14 @@
         </div>
     </section>
 
-    <!-- CITY SELECTOR + MAP -->
+    <!-- CITY MAP SECTION -->
     <section id="map-section" class="section">
         <div class="section-header">
             <h2>Live Traffic Intelligence</h2>
-            <p>Select a city and explore real-time AI-managed traffic flow</p>
+            <p>Select a city and explore real-time AI traffic management</p>
         </div>
 
+        <!-- CITY TABS -->
         <div class="city-tabs">
             <button class="city-tab active" onclick="switchCity('paris')">
                 <span class="city-icon">🗼</span> Paris
@@ -73,90 +72,77 @@
                 <span class="city-icon">🏰</span> Reims
             </button>
             <button class="city-tab" onclick="switchCity('lille')">
-                <span class="city-icon">🏛️</span> Lille
+                <span class="city-icon">🏛</span> Lille
             </button>
         </div>
 
+        <!-- MAP + SIDEBAR -->
         <div class="map-wrapper">
             <!-- SIDEBAR -->
             <div class="map-sidebar">
                 <div class="sidebar-section">
-                    <h3>🎛️ Control Panel</h3>
-                    <div class="control-item">
-                        <label>Traffic Layer</label>
-                        <div class="toggle-group">
-                            <button class="toggle-btn active" id="tog-traffic" onclick="toggleLayer('traffic')">On</button>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <label>Vehicle Markers</label>
-                        <div class="toggle-group">
-                            <button class="toggle-btn active" id="tog-vehicles" onclick="toggleLayer('vehicles')">On</button>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <label>Intersections</label>
-                        <div class="toggle-group">
-                            <button class="toggle-btn active" id="tog-intersections" onclick="toggleLayer('intersections')">On</button>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <label>Heatmap</label>
-                        <div class="toggle-group">
-                            <button class="toggle-btn" id="tog-heatmap" onclick="toggleLayer('heatmap')">Off</button>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <label>Time Simulation</label>
-                        <select id="time-select" onchange="changeTime()">
-                            <option value="now">Now (Live)</option>
-                            <option value="morning">Morning Rush 8AM</option>
-                            <option value="noon">Noon 12PM</option>
-                            <option value="evening">Evening Rush 6PM</option>
-                            <option value="night">Night 11PM</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
                     <h3>📊 City Stats</h3>
                     <div class="city-stat-row">
-                        <span>Active Intersections</span>
-                        <span class="csv" id="cs-intersections">247</span>
+                        <span>Active Vehicles</span>
+                        <span class="csv" id="cs-vehicles">12,847</span>
                     </div>
                     <div class="city-stat-row">
-                        <span>Vehicles Tracked</span>
-                        <span class="csv" id="cs-vehicles">12,483</span>
+                        <span>AI Intersections</span>
+                        <span class="csv" id="cs-intersections">48</span>
+                    </div>
+                    <div class="city-stat-row">
+                        <span>Congestion Level</span>
+                        <span class="csv congestion-low" id="cs-congestion">Low</span>
                     </div>
                     <div class="city-stat-row">
                         <span>Avg Speed</span>
                         <span class="csv" id="cs-speed">34 km/h</span>
                     </div>
                     <div class="city-stat-row">
-                        <span>Congestion Level</span>
-                        <span class="csv congestion-moderate" id="cs-congestion">Moderate</span>
-                    </div>
-                    <div class="city-stat-row">
-                        <span>AI Adjustments/min</span>
-                        <span class="csv" id="cs-adjustments">156</span>
+                        <span>Signal Adjustments</span>
+                        <span class="csv" id="cs-adjustments">1,247</span>
                     </div>
                     <div class="city-stat-row">
                         <span>Incidents</span>
-                        <span class="csv incident-val" id="cs-incidents">3 active</span>
+                        <span class="csv incident-val" id="cs-incidents">3</span>
                     </div>
                 </div>
 
                 <div class="sidebar-section">
-                    <h3>🚨 Live Alerts</h3>
+                    <h3>🔧 Display Options</h3>
+                    <div class="control-item">
+                        <label>Map View</label>
+                        <select id="mapViewSelect" onchange="changeMapView(this.value)">
+                            <option value="dark">Dark</option>
+                            <option value="satellite">Satellite</option>
+                            <option value="standard">Standard</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Traffic Overlay</label>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" id="tog-traffic" onclick="toggleTraffic()">Show</button>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <label>Show Vehicles</label>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" id="tog-vehicles" onclick="toggleVehicles()">Show</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>⚠️ Live Alerts</h3>
                     <div class="alerts-container" id="alerts-container">
                         <div class="alert-item alert-warning">
-                            ⚠️ Heavy traffic on A4 — rerouting suggested
-                        </div>
-                        <div class="alert-item alert-info">
-                            ℹ️ Signal optimization active — Rue de Vesle
+                            🚧 Slow traffic on A4 near Reims Centre
                         </div>
                         <div class="alert-item alert-success">
-                            ✅ Congestion cleared — Boulevard Lundy
+                            ✅ AI rerouted 340 vehicles via Bd Lundy
+                        </div>
+                        <div class="alert-item alert-info">
+                            🔄 Signal timing optimized at 12 intersections
                         </div>
                     </div>
                 </div>
@@ -165,92 +151,91 @@
             <!-- MAP -->
             <div class="map-container">
                 <div id="map"></div>
-                <!-- MAP OVERLAY INFO -->
-                <div class="map-overlay-top">
-                    <span class="mot-city" id="mot-city">Paris</span>
-                    <span class="mot-time" id="mot-time">Live</span>
-                    <span class="mot-status" id="mot-status">● AI Active</span>
-                </div>
-                <div class="map-legend-overlay">
-                    <div class="legend-item"><span class="leg-color" style="background:#00e676"></span> Free Flow</div>
-                    <div class="legend-item"><span class="leg-color" style="background:#ffeb3b"></span> Moderate</div>
-                    <div class="legend-item"><span class="leg-color" style="background:#ff9800"></span> Slow</div>
-                    <div class="legend-item"><span class="leg-color" style="background:#f44336"></span> Congested</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- INTERSECTION DETAIL POPUP -->
-        <div class="intersection-detail" id="intersection-detail">
-            <div class="id-header">
-                <h3 id="id-name">Intersection Detail</h3>
-                <button class="id-close" onclick="closeDetail()">✕</button>
-            </div>
-            <div class="id-body">
-                <div class="id-visual">
-                    <div class="mini-intersection">
-                        <div class="mi-road mi-road-v"></div>
-                        <div class="mi-road mi-road-h"></div>
-                        <div class="mi-light mi-light-n" id="mi-n">🔴</div>
-                        <div class="mi-light mi-light-s" id="mi-s">🔴</div>
-                        <div class="mi-light mi-light-e" id="mi-e">🟢</div>
-                        <div class="mi-light mi-light-w" id="mi-w">🟢</div>
+                <!-- MAP OVERLAYS -->
+                <div class="map-overlay-top">
+                    <div class="mot-city" id="mot-city">📍 Paris</div>
+                    <div class="mot-time" id="mot-time">14:32:07</div>
+                    <div class="mot-status">● AI Active</div>
+                </div>
+
+                <div class="map-legend-overlay">
+                    <div class="legend-item">
+                        <span class="leg-color" style="background:#00e676;"></span> Fluide
                     </div>
-                </div>
-                <div class="id-stats">
-                    <div class="ids-row"><span>Phase</span><span id="id-phase">EW Green</span></div>
-                    <div class="ids-row"><span>Wait N/S</span><span id="id-wait-ns">24s</span></div>
-                    <div class="ids-row"><span>Wait E/W</span><span id="id-wait-ew">8s</span></div>
-                    <div class="ids-row"><span>Cars in queue</span><span id="id-queue">12</span></div>
-                    <div class="ids-row"><span>Throughput</span><span id="id-throughput">340/hr</span></div>
-                    <div class="ids-row"><span>AI Decision</span><span id="id-ai" class="ai-decision">Extend EW +8s</span></div>
-                </div>
-            </div>
-            <div class="id-chart">
-                <h4>Last Hour Flow</h4>
-                <div class="mini-chart">
-                    <div class="mc-bar" style="height:40%"></div>
-                    <div class="mc-bar" style="height:55%"></div>
-                    <div class="mc-bar" style="height:70%"></div>
-                    <div class="mc-bar" style="height:85%"></div>
-                    <div class="mc-bar mc-peak" style="height:95%"></div>
-                    <div class="mc-bar" style="height:75%"></div>
-                    <div class="mc-bar" style="height:60%"></div>
-                    <div class="mc-bar" style="height:50%"></div>
-                    <div class="mc-bar" style="height:65%"></div>
-                    <div class="mc-bar" style="height:80%"></div>
-                    <div class="mc-bar mc-peak" style="height:90%"></div>
-                    <div class="mc-bar" style="height:70%"></div>
+                    <div class="legend-item">
+                        <span class="leg-color" style="background:#ffeb3b;"></span> Modéré
+                    </div>
+                    <div class="legend-item">
+                        <span class="leg-color" style="background:#ff9800;"></span> Dense
+                    </div>
+                    <div class="legend-item">
+                        <span class="leg-color" style="background:#f44336;"></span> Bloqué
+                    </div>
+                    <div class="legend-item">
+                        <span class="leg-color" style="background:#2196f3; width:8px; height:8px; border-radius:50%;"></span> Intersection AI
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- INTERSECTION DETAIL PANEL -->
+    <div class="intersection-detail" id="intersection-detail">
+        <div class="id-header">
+            <h3 id="id-name">Intersection</h3>
+            <button class="id-close" onclick="closeDetail()">✕</button>
+        </div>
+        <div class="id-body">
+            <div class="id-visual">
+                <div class="mini-intersection">
+                    <div class="mi-road mi-road-v"></div>
+                    <div class="mi-road mi-road-h"></div>
+                    <div class="mi-light mi-light-n" id="mi-n">🟢</div>
+                    <div class="mi-light mi-light-s" id="mi-s">🟢</div>
+                    <div class="mi-light mi-light-e" id="mi-e">🔴</div>
+                    <div class="mi-light mi-light-w" id="mi-w">🔴</div>
+                </div>
+            </div>
+            <div class="id-stats">
+                <div class="ids-row"><span>Cars Waiting N/S</span><span id="ids-ns">12</span></div>
+                <div class="ids-row"><span>Cars Waiting E/W</span><span id="ids-ew">8</span></div>
+                <div class="ids-row"><span>Cycle Time</span><span id="ids-cycle">45s</span></div>
+                <div class="ids-row"><span>Avg Wait</span><span id="ids-wait">18s</span></div>
+                <div class="ids-row"><span>AI Decision</span><span class="ai-decision" id="ids-decision">Extend N/S +8s</span></div>
+            </div>
+        </div>
+        <div class="id-chart">
+            <h4>Traffic Flow (Last 60 min)</h4>
+            <div class="mini-chart" id="mini-chart"></div>
+        </div>
+    </div>
+
     <!-- DASHBOARD -->
     <section id="dashboard" class="section section-dark">
         <div class="section-header">
             <h2>Performance Dashboard</h2>
-            <p>Real-time comparison: SmartFlow AI vs Traditional Fixed-Timing</p>
+            <p>AI SmartFlow vs Traditional traffic lights</p>
         </div>
 
         <div class="dash-grid">
             <div class="dash-card">
                 <div class="dc-header">
-                    <span class="dc-icon">⏱️</span>
+                    <span class="dc-icon">⏱</span>
                     <span class="dc-title">Average Wait Time</span>
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
-                        <span class="dc-val" id="dc-wait-ai">14s</span>
-                        <span class="dc-label">SmartFlow AI</span>
+                        <span class="dc-val">18s</span>
+                        <span class="dc-label">SmartFlow</span>
                     </div>
-                    <div class="dc-vs">vs</div>
+                    <span class="dc-vs">vs</span>
                     <div class="dc-trad">
-                        <span class="dc-val">38s</span>
-                        <span class="dc-label">Fixed Timing</span>
+                        <span class="dc-val">52s</span>
+                        <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">-63% improvement</div>
+                <div class="dc-improvement">↓ 65% faster</div>
             </div>
 
             <div class="dash-card">
@@ -260,16 +245,16 @@
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
-                        <span class="dc-val">1,840</span>
-                        <span class="dc-label">SmartFlow AI</span>
+                        <span class="dc-val">2,840</span>
+                        <span class="dc-label">SmartFlow</span>
                     </div>
-                    <div class="dc-vs">vs</div>
+                    <span class="dc-vs">vs</span>
                     <div class="dc-trad">
-                        <span class="dc-val">1,200</span>
-                        <span class="dc-label">Fixed Timing</span>
+                        <span class="dc-val">1,920</span>
+                        <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">+53% more vehicles</div>
+                <div class="dc-improvement">↑ 48% more vehicles</div>
             </div>
 
             <div class="dash-card">
@@ -279,16 +264,16 @@
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
-                        <span class="dc-val">4.2t</span>
-                        <span class="dc-label">SmartFlow AI</span>
+                        <span class="dc-val">-28%</span>
+                        <span class="dc-label">SmartFlow</span>
                     </div>
-                    <div class="dc-vs">vs</div>
+                    <span class="dc-vs">vs</span>
                     <div class="dc-trad">
-                        <span class="dc-val">5.8t</span>
-                        <span class="dc-label">Fixed Timing</span>
+                        <span class="dc-val">Base</span>
+                        <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">-28% less pollution</div>
+                <div class="dc-improvement">🌍 12T CO₂ saved / month</div>
             </div>
 
             <div class="dash-card">
@@ -298,32 +283,31 @@
                 </div>
                 <div class="dc-comparison">
                     <div class="dc-ai">
-                        <span class="dc-val">6.2m</span>
-                        <span class="dc-label">SmartFlow AI</span>
+                        <span class="dc-val">4.2m</span>
+                        <span class="dc-label">SmartFlow</span>
                     </div>
-                    <div class="dc-vs">vs</div>
+                    <span class="dc-vs">vs</span>
                     <div class="dc-trad">
-                        <span class="dc-val">8.5m</span>
-                        <span class="dc-label">Fixed Timing</span>
+                        <span class="dc-val">8.7m</span>
+                        <span class="dc-label">Traditional</span>
                     </div>
                 </div>
-                <div class="dc-improvement">-2.3 min faster</div>
+                <div class="dc-improvement">↓ 52% faster response</div>
             </div>
         </div>
 
-        <!-- LIVE COUNTER -->
         <div class="live-counter-row">
             <div class="live-counter">
-                <span class="lc-num" id="lc-cars">0</span>
+                <span class="lc-num" id="lc-cars">847,230</span>
                 <span class="lc-label">Cars Optimized Today</span>
             </div>
             <div class="live-counter">
-                <span class="lc-num" id="lc-co2">0</span>
-                <span class="lc-label">kg CO₂ Saved</span>
+                <span class="lc-num" id="lc-co2">5,820</span>
+                <span class="lc-label">Kg CO₂ Saved</span>
             </div>
             <div class="live-counter">
-                <span class="lc-num" id="lc-hours">0</span>
-                <span class="lc-label">Hours Saved for Drivers</span>
+                <span class="lc-num" id="lc-hours">12,450</span>
+                <span class="lc-label">Hours Saved</span>
             </div>
         </div>
     </section>
@@ -332,39 +316,39 @@
     <section id="how" class="section">
         <div class="section-header">
             <h2>How SmartFlow Works</h2>
-            <p>Four layers of intelligence powering every intersection</p>
+            <p>From sensor data to optimized traffic in milliseconds</p>
         </div>
 
         <div class="steps-timeline">
             <div class="step-item">
                 <div class="step-num">1</div>
                 <div class="step-content">
-                    <h3>📷 Detect</h3>
-                    <p>Computer vision cameras detect and classify every vehicle, pedestrian, and cyclist approaching the intersection in real time.</p>
+                    <h3>📷 Sense</h3>
+                    <p>Cameras and IoT sensors detect vehicle count, speed, and queue length at every intersection in real time.</p>
                 </div>
             </div>
             <div class="step-connector"></div>
             <div class="step-item">
                 <div class="step-num">2</div>
                 <div class="step-content">
-                    <h3>🧮 Predict</h3>
-                    <p>ML models analyze historical data, weather, events, and current flow to forecast traffic 5-15 minutes ahead.</p>
+                    <h3>🧠 Analyze</h3>
+                    <p>AI processes data from all connected intersections simultaneously, predicting congestion before it happens.</p>
                 </div>
             </div>
             <div class="step-connector"></div>
             <div class="step-item">
                 <div class="step-num">3</div>
                 <div class="step-content">
-                    <h3>⚡ Optimize</h3>
-                    <p>A reinforcement learning agent dynamically adjusts signal timing, phase sequencing, and multi-intersection coordination.</p>
+                    <h3>⚡ Adapt</h3>
+                    <p>Signal timings adjust dynamically — extending green for heavy flow, creating green waves for emergency vehicles.</p>
                 </div>
             </div>
             <div class="step-connector"></div>
             <div class="step-item">
                 <div class="step-num">4</div>
                 <div class="step-content">
-                    <h3>🔄 Learn</h3>
-                    <p>Every outcome feeds back into the system. SmartFlow gets smarter with every cycle, continuously improving performance.</p>
+                    <h3>📈 Learn</h3>
+                    <p>The system learns from every decision, improving predictions for rush hours, events, and weather conditions.</p>
                 </div>
             </div>
         </div>
@@ -372,15 +356,12 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">🚦 SmartFlow</div>
-            <p>Design Thinking Prototype — Reducing Urban Traffic Congestion with AI</p>
-            <p class="footer-note">NEOMA Business School — 2025</p>
-        </div>
+        <div class="footer-brand">🚦 SmartFlow</div>
+        <p>AI-Powered Traffic Management for Smarter Cities</p>
+        <p class="footer-note">Simulation for demonstration purposes • Paris • Reims • Lille</p>
     </footer>
 
-    <!-- SCRIPTS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- ==================== JAVASCRIPT ==================== -->
     <script>
         // ==========================================
         // CITY DATA
@@ -390,148 +371,177 @@
                 name: 'Paris',
                 center: [48.8566, 2.3522],
                 zoom: 13,
-                intersections: 847,
-                vehicles: '142,483',
-                speed: '28 km/h',
+                vehicles: '24,312',
+                intersections: '124',
                 congestion: 'Moderate',
                 congestionClass: 'congestion-moderate',
-                adjustments: 2340,
-                incidents: '7 active',
-                alerts: [
-                    { type: 'warning', text: '⚠️ Heavy traffic on Périphérique Sud — AI rerouting active' },
-                    { type: 'danger', text: '🚨 Accident detected Porte de Clichy — emergency lane cleared' },
-                    { type: 'info', text: 'ℹ️ Signal optimization active — Champs-Élysées corridor' },
-                    { type: 'success', text: '✅ Congestion cleared — Rue de Rivoli' }
+                speed: '28 km/h',
+                adjustments: 3842,
+                incidents: 7,
+                // Real intersections in Paris
+                intersectionPoints: [
+                    { name: 'Place de la Bastille', lat: 48.8533, lng: 2.3692, density: 'high' },
+                    { name: 'Place de la République', lat: 48.8675, lng: 2.3637, density: 'high' },
+                    { name: 'Châtelet', lat: 48.8584, lng: 2.3474, density: 'critical' },
+                    { name: 'Place de la Nation', lat: 48.8487, lng: 2.3953, density: 'medium' },
+                    { name: 'Gare du Nord', lat: 48.8809, lng: 2.3553, density: 'high' },
+                    { name: 'Gare de Lyon', lat: 48.8443, lng: 2.3743, density: 'medium' },
+                    { name: 'Opéra', lat: 48.8719, lng: 2.3316, density: 'high' },
+                    { name: 'Place de Clichy', lat: 48.8835, lng: 2.3272, density: 'medium' },
+                    { name: 'Porte de Vincennes', lat: 48.8472, lng: 2.4104, density: 'low' },
+                    { name: 'Place d\'Italie', lat: 48.8311, lng: 2.3558, density: 'medium' },
+                    { name: 'Montparnasse', lat: 48.8422, lng: 2.3219, density: 'high' },
+                    { name: 'Porte Maillot', lat: 48.8781, lng: 2.2822, density: 'medium' },
+                    { name: 'Pont de Neuilly', lat: 48.8847, lng: 2.2600, density: 'low' },
+                    { name: 'La Défense', lat: 48.8920, lng: 2.2362, density: 'high' },
+                    { name: 'Arc de Triomphe', lat: 48.8738, lng: 2.2950, density: 'critical' },
+                    { name: 'Concorde', lat: 48.8656, lng: 2.3212, density: 'high' },
+                    { name: 'Saint-Lazare', lat: 48.8760, lng: 2.3250, density: 'high' },
+                    { name: 'Belleville', lat: 48.8717, lng: 2.3769, density: 'medium' },
+                    { name: 'Ménilmontant', lat: 48.8662, lng: 2.3839, density: 'low' },
+                    { name: 'Oberkampf', lat: 48.8649, lng: 2.3684, density: 'medium' },
                 ],
+                // Road segments (polylines simulating traffic)
                 roads: [
-                    { points: [[48.865, 2.320], [48.862, 2.330], [48.858, 2.340], [48.855, 2.348]], color: '#f44336', name: 'Rue de Rivoli' },
-                    { points: [[48.870, 2.308], [48.866, 2.312], [48.862, 2.316], [48.858, 2.320]], color: '#00e676', name: 'Bd Haussmann' },
-                    { points: [[48.853, 2.345], [48.850, 2.350], [48.847, 2.355], [48.844, 2.360]], color: '#ffeb3b', name: 'Bd Saint-Germain' },
-                    { points: [[48.875, 2.340], [48.870, 2.345], [48.865, 2.348], [48.860, 2.350]], color: '#00e676', name: 'Canal Saint-Martin' },
-                    { points: [[48.848, 2.330], [48.845, 2.338], [48.842, 2.345]], color: '#ff9800', name: 'Bd Montparnasse' },
-                    { points: [[48.860, 2.295], [48.858, 2.305], [48.856, 2.315], [48.854, 2.325]], color: '#00e676', name: 'Av des Champs-Élysées' },
-                    { points: [[48.862, 2.350], [48.859, 2.358], [48.856, 2.366], [48.853, 2.374]], color: '#f44336', name: 'Av de la République' },
-                    { points: [[48.845, 2.355], [48.842, 2.365], [48.839, 2.375]], color: '#ffeb3b', name: 'Bd Diderot' },
-                    { points: [[48.880, 2.330], [48.877, 2.338], [48.874, 2.345]], color: '#00e676', name: 'Av Jean Jaurès' },
-                    { points: [[48.852, 2.290], [48.849, 2.300], [48.846, 2.310]], color: '#00e676', name: 'Bd Garibaldi' },
-                    // Périphérique segments
-                    { points: [[48.882, 2.300], [48.885, 2.320], [48.884, 2.340], [48.882, 2.360], [48.878, 2.375]], color: '#f44336', name: 'Périphérique Nord' },
-                    { points: [[48.835, 2.300], [48.833, 2.320], [48.832, 2.340], [48.834, 2.360], [48.837, 2.375]], color: '#ff9800', name: 'Périphérique Sud' },
-                ],
-                markers: [
-                    { pos: [48.8606, 2.3376], type: 'green', name: 'Châtelet', queue: 5, throughput: 420 },
-                    { pos: [48.8738, 2.2950], type: 'green', name: 'Arc de Triomphe', queue: 8, throughput: 380 },
-                    { pos: [48.8530, 2.3499], type: 'red', name: 'Bastille', queue: 22, throughput: 180 },
-                    { pos: [48.8675, 2.3340], type: 'yellow', name: 'Opéra', queue: 14, throughput: 290 },
-                    { pos: [48.8462, 2.3464], type: 'green', name: 'Gare de Lyon', queue: 6, throughput: 350 },
-                    { pos: [48.8809, 2.3553], type: 'green', name: 'Gare du Nord', queue: 9, throughput: 310 },
-                    { pos: [48.8417, 2.3216], type: 'yellow', name: 'Denfert-Rochereau', queue: 16, throughput: 240 },
-                    { pos: [48.8584, 2.2945], type: 'green', name: 'Tour Eiffel', queue: 4, throughput: 400 },
-                    { pos: [48.8867, 2.3431], type: 'red', name: 'Porte de Clichy', queue: 28, throughput: 150 },
-                    { pos: [48.8490, 2.3700], type: 'yellow', name: 'Nation', queue: 13, throughput: 280 },
-                    { pos: [48.8328, 2.3556], type: 'green', name: 'Porte d\'Italie', queue: 7, throughput: 360 },
-                    { pos: [48.8650, 2.3800], type: 'green', name: 'Père Lachaise', queue: 3, throughput: 440 },
+                    { name: 'Champs-Élysées', coords: [[48.8686,2.3073],[48.8704,2.3035],[48.8722,2.2986],[48.8738,2.2950]], color: '#f44336', flow: 'Bloqué — 8 km/h' },
+                    { name: 'Bd Haussmann', coords: [[48.8745,2.3289],[48.8738,2.3200],[48.8730,2.3120],[48.8719,2.3050]], color: '#ff9800', flow: 'Dense — 15 km/h' },
+                    { name: 'Rue de Rivoli', coords: [[48.8565,2.3630],[48.8570,2.3530],[48.8575,2.3450],[48.8580,2.3370],[48.8584,2.3280]], color: '#ffeb3b', flow: 'Modéré — 22 km/h' },
+                    { name: 'Bd de Sébastopol', coords: [[48.8584,2.3474],[48.8625,2.3497],[48.8670,2.3520],[48.8720,2.3543]], color: '#00e676', flow: 'Fluide — 35 km/h' },
+                    { name: 'Bd Voltaire', coords: [[48.8533,2.3692],[48.8580,2.3710],[48.8620,2.3730],[48.8675,2.3637]], color: '#ff9800', flow: 'Dense — 14 km/h' },
+                    { name: 'Av. de la Grande Armée', coords: [[48.8738,2.2950],[48.8780,2.2870],[48.8820,2.2780],[48.8860,2.2680]], color: '#ffeb3b', flow: 'Modéré — 25 km/h' },
+                    { name: 'Bd Périphérique Nord', coords: [[48.8970,2.3100],[48.8960,2.3300],[48.8940,2.3500],[48.8910,2.3700]], color: '#f44336', flow: 'Bloqué — 5 km/h' },
+                    { name: 'Bd Périphérique Sud', coords: [[48.8180,2.3000],[48.8190,2.3200],[48.8200,2.3400],[48.8210,2.3600]], color: '#ff9800', flow: 'Dense — 18 km/h' },
+                    { name: 'Quai de Seine Rive Droite', coords: [[48.8560,2.3700],[48.8570,2.3600],[48.8575,2.3500],[48.8580,2.3400],[48.8582,2.3300]], color: '#00e676', flow: 'Fluide — 38 km/h' },
+                    { name: 'Bd Saint-Germain', coords: [[48.8505,2.3700],[48.8510,2.3550],[48.8515,2.3400],[48.8520,2.3250]], color: '#ffeb3b', flow: 'Modéré — 20 km/h' },
                 ]
             },
             reims: {
                 name: 'Reims',
-                center: [49.2583, 3.2794],
+                center: [49.2533, 4.0318],
                 zoom: 14,
-                intersections: 124,
-                vehicles: '8,720',
-                speed: '34 km/h',
+                vehicles: '4,215',
+                intersections: '32',
                 congestion: 'Low',
                 congestionClass: 'congestion-low',
-                adjustments: 156,
-                incidents: '1 active',
-                alerts: [
-                    { type: 'info', text: 'ℹ️ Optimization active — Rue de Vesle corridor' },
-                    { type: 'success', text: '✅ Morning rush handled smoothly — Place Drouet d\'Erlon' },
-                    { type: 'warning', text: '⚠️ Construction zone — Bd Lundy, alternate routes suggested' }
+                speed: '38 km/h',
+                adjustments: 892,
+                incidents: 1,
+                intersectionPoints: [
+                    { name: 'Place Drouet-d\'Erlon', lat: 49.2520, lng: 4.0283, density: 'medium' },
+                    { name: 'Place Royale', lat: 49.2528, lng: 4.0337, density: 'low' },
+                    { name: 'Cathédrale Notre-Dame', lat: 49.2538, lng: 4.0346, density: 'medium' },
+                    { name: 'Porte Mars', lat: 49.2565, lng: 4.0274, density: 'low' },
+                    { name: 'Gare de Reims', lat: 49.2585, lng: 4.0244, density: 'high' },
+                    { name: 'Place Luton', lat: 49.2462, lng: 4.0317, density: 'low' },
+                    { name: 'Bd Lundy / Av. de Laon', lat: 49.2590, lng: 4.0310, density: 'medium' },
+                    { name: 'Pont de Vesle', lat: 49.2500, lng: 4.0250, density: 'medium' },
+                    { name: 'Av. Jean Jaurès', lat: 49.2475, lng: 4.0215, density: 'low' },
+                    { name: 'Bd Général Leclerc', lat: 49.2505, lng: 4.0180, density: 'low' },
+                    { name: 'Place du Forum', lat: 49.2545, lng: 4.0310, density: 'medium' },
+                    { name: 'Rue de Vesle / Bd de la Paix', lat: 49.2510, lng: 4.0400, density: 'high' },
+                    { name: 'Rond-point Farman', lat: 49.2420, lng: 4.0250, density: 'low' },
+                    { name: 'Tinqueux - RN31', lat: 49.2540, lng: 4.0080, density: 'medium' },
+                    { name: 'A4 Sortie Reims Centre', lat: 49.2650, lng: 4.0450, density: 'high' },
                 ],
                 roads: [
-                    { points: [[49.262, 3.270], [49.260, 3.275], [49.258, 3.280], [49.256, 3.285]], color: '#00e676', name: 'Rue de Vesle' },
-                    { points: [[49.255, 3.270], [49.257, 3.275], [49.259, 3.280]], color: '#ffeb3b', name: 'Bd Lundy' },
-                    { points: [[49.263, 3.285], [49.260, 3.283], [49.257, 3.281]], color: '#00e676', name: 'Rue de Talleyrand' },
-                    { points: [[49.260, 3.265], [49.258, 3.272], [49.256, 3.279]], color: '#00e676', name: 'Bd de la Paix' },
-                    { points: [[49.252, 3.275], [49.254, 3.282], [49.256, 3.289]], color: '#ff9800', name: 'Av de Laon' },
-                    { points: [[49.265, 3.278], [49.263, 3.283], [49.261, 3.288]], color: '#00e676', name: 'Bd Joffre' },
-                ],
-                markers: [
-                    { pos: [49.2583, 3.2794], type: 'green', name: 'Place Drouet d\'Erlon', queue: 3, throughput: 220 },
-                    { pos: [49.2537, 3.2900], type: 'green', name: 'Cathédrale', queue: 4, throughput: 190 },
-                    { pos: [49.2610, 3.2730], type: 'yellow', name: 'Gare de Reims', queue: 11, throughput: 160 },
-                    { pos: [49.2560, 3.2680], type: 'green', name: 'Place de la République', queue: 2, throughput: 240 },
-                    { pos: [49.2640, 3.2850], type: 'green', name: 'Parc Pommery', queue: 1, throughput: 280 },
-                    { pos: [49.2510, 3.2810], type: 'yellow', name: 'Porte Mars', queue: 8, throughput: 180 },
+                    { name: 'Rue de Vesle', coords: [[49.2500,4.0200],[49.2510,4.0250],[49.2520,4.0300],[49.2525,4.0350],[49.2530,4.0400]], color: '#ffeb3b', flow: 'Modéré — 24 km/h' },
+                    { name: 'Bd Lundy', coords: [[49.2560,4.0250],[49.2570,4.0280],[49.2580,4.0300],[49.2595,4.0340]], color: '#00e676', flow: 'Fluide — 40 km/h' },
+                    { name: 'Av. de Laon', coords: [[49.2590,4.0310],[49.2620,4.0320],[49.2650,4.0340],[49.2680,4.0360]], color: '#00e676', flow: 'Fluide — 42 km/h' },
+                    { name: 'Bd de la Paix', coords: [[49.2530,4.0400],[49.2540,4.0430],[49.2550,4.0460],[49.2560,4.0490]], color: '#ff9800', flow: 'Dense — 18 km/h' },
+                    { name: 'Rue Jean Jaurès', coords: [[49.2520,4.0283],[49.2500,4.0260],[49.2480,4.0240],[49.2460,4.0220]], color: '#00e676', flow: 'Fluide — 36 km/h' },
+                    { name: 'Bd Général Leclerc', coords: [[49.2530,4.0200],[49.2520,4.0180],[49.2510,4.0160],[49.2500,4.0140]], color: '#ffeb3b', flow: 'Modéré — 28 km/h' },
+                    { name: 'A4 (Section Reims)', coords: [[49.2650,4.0450],[49.2670,4.0550],[49.2690,4.0650],[49.2710,4.0750]], color: '#f44336', flow: 'Bloqué — 10 km/h' },
+                    { name: 'Chaussée Bocquaine', coords: [[49.2538,4.0346],[49.2555,4.0360],[49.2575,4.0370],[49.2590,4.0380]], color: '#00e676', flow: 'Fluide — 35 km/h' },
                 ]
             },
             lille: {
                 name: 'Lille',
                 center: [50.6292, 3.0573],
                 zoom: 14,
-                intersections: 312,
-                vehicles: '34,210',
-                speed: '31 km/h',
+                vehicles: '8,732',
+                intersections: '56',
                 congestion: 'Moderate',
                 congestionClass: 'congestion-moderate',
-                adjustments: 890,
-                incidents: '2 active',
-                alerts: [
-                    { type: 'warning', text: '⚠️ Slow traffic on Bd de la Liberté — extra green phase active' },
-                    { type: 'danger', text: '🚨 Road closure Rue Nationale — AI rerouting in progress' },
-                    { type: 'success', text: '✅ Flow restored — Porte de Valenciennes' },
-                    { type: 'info', text: 'ℹ️ Predictive mode: expecting 15% increase at 17:30' }
+                speed: '31 km/h',
+                adjustments: 1563,
+                incidents: 4,
+                intersectionPoints: [
+                    { name: 'Grand Place', lat: 50.6369, lng: 3.0635, density: 'high' },
+                    { name: 'Gare Lille Flandres', lat: 50.6365, lng: 3.0708, density: 'critical' },
+                    { name: 'Gare Lille Europe', lat: 50.6388, lng: 3.0755, density: 'high' },
+                    { name: 'Porte de Paris', lat: 50.6307, lng: 3.0620, density: 'medium' },
+                    { name: 'Place de la République', lat: 50.6305, lng: 3.0575, density: 'medium' },
+                    { name: 'Bd de la Liberté', lat: 50.6335, lng: 3.0598, density: 'high' },
+                    { name: 'Euralille', lat: 50.6380, lng: 3.0740, density: 'high' },
+                    { name: 'Rue Nationale / Bd Carnot', lat: 50.6350, lng: 3.0615, density: 'medium' },
+                    { name: 'Vieux-Lille', lat: 50.6420, lng: 3.0600, density: 'low' },
+                    { name: 'Porte de Valenciennes', lat: 50.6230, lng: 3.0660, density: 'medium' },
+                    { name: 'CHR - Bd Belfort', lat: 50.6100, lng: 3.0400, density: 'high' },
+                    { name: 'Roubaix Centre', lat: 50.6900, lng: 3.1800, density: 'medium' },
+                    { name: 'Tourcoing Centre', lat: 50.7233, lng: 3.1600, density: 'low' },
+                    { name: 'Villeneuve-d\'Ascq', lat: 50.6220, lng: 3.1380, density: 'medium' },
+                    { name: 'Rond-point Pasteur', lat: 50.6280, lng: 3.0500, density: 'low' },
                 ],
                 roads: [
-                    { points: [[50.633, 3.050], [50.631, 3.055], [50.629, 3.060], [50.627, 3.065]], color: '#ff9800', name: 'Bd de la Liberté' },
-                    { points: [[50.636, 3.058], [50.633, 3.060], [50.630, 3.062]], color: '#f44336', name: 'Rue Nationale' },
-                    { points: [[50.628, 3.045], [50.630, 3.052], [50.632, 3.059]], color: '#00e676', name: 'Rue de Béthune' },
-                    { points: [[50.625, 3.055], [50.627, 3.060], [50.629, 3.065], [50.631, 3.070]], color: '#00e676', name: 'Bd de Strasbourg' },
-                    { points: [[50.635, 3.045], [50.633, 3.053], [50.631, 3.061]], color: '#ffeb3b', name: 'Av du Peuple Belge' },
-                    { points: [[50.625, 3.070], [50.628, 3.068], [50.631, 3.066]], color: '#00e676', name: 'Bd Victor Hugo' },
-                    { points: [[50.637, 3.065], [50.634, 3.063], [50.631, 3.061]], color: '#ff9800', name: 'Rue Solférino' },
-                ],
-                markers: [
-                    { pos: [50.6366, 3.0635], type: 'red', name: 'Grand Place', queue: 19, throughput: 200 },
-                    { pos: [50.6310, 3.0700], type: 'green', name: 'Gare Lille Flandres', queue: 6, throughput: 320 },
-                    { pos: [50.6280, 3.0550], type: 'green', name: 'Place de la République', queue: 4, throughput: 350 },
-                    { pos: [50.6330, 3.0480], type: 'yellow', name: 'Porte de Gand', queue: 10, throughput: 270 },
-                    { pos: [50.6250, 3.0650], type: 'green', name: 'Porte de Valenciennes', queue: 5, throughput: 300 },
-                    { pos: [50.6350, 3.0750], type: 'yellow', name: 'Gare Lille Europe', queue: 12, throughput: 250 },
-                    { pos: [50.6400, 3.0580], type: 'green', name: 'Citadelle', queue: 2, throughput: 380 },
+                    { name: 'Bd de la Liberté', coords: [[50.6369,3.0635],[50.6350,3.0615],[50.6335,3.0598],[50.6310,3.0580]], color: '#ff9800', flow: 'Dense — 16 km/h' },
+                    { name: 'Rue Nationale', coords: [[50.6369,3.0635],[50.6380,3.0650],[50.6390,3.0680],[50.6395,3.0710]], color: '#ffeb3b', flow: 'Modéré — 22 km/h' },
+                    { name: 'Bd Carnot', coords: [[50.6350,3.0615],[50.6360,3.0650],[50.6365,3.0708]], color: '#f44336', flow: 'Bloqué — 7 km/h' },
+                    { name: 'Bd Victor Hugo', coords: [[50.6305,3.0575],[50.6290,3.0530],[50.6275,3.0490],[50.6260,3.0460]], color: '#00e676', flow: 'Fluide — 38 km/h' },
+                    { name: 'Périphérique Sud', coords: [[50.6050,3.0200],[50.6060,3.0400],[50.6080,3.0600],[50.6100,3.0800]], color: '#ffeb3b', flow: 'Modéré — 55 km/h' },
+                    { name: 'A1 Sortie Lille', coords: [[50.6150,3.0900],[50.6180,3.0850],[50.6220,3.0780],[50.6260,3.0700]], color: '#ff9800', flow: 'Dense — 30 km/h' },
+                    { name: 'Rue du Molinel', coords: [[50.6365,3.0708],[50.6355,3.0730],[50.6345,3.0750],[50.6335,3.0770]], color: '#00e676', flow: 'Fluide — 32 km/h' },
                 ]
             }
         };
 
         // ==========================================
-        // MAP INIT
+        // MAP SETUP
         // ==========================================
-        let map = L.map('map', {
-            zoomControl: false
-        }).setView([48.8566, 2.3522], 13);
-
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap © CARTO',
-            maxZoom: 19
-        }).addTo(map);
-
-        let roadLayers = [];
-        let markerLayers = [];
-        let vehicleLayers = [];
-        let heatmapActive = false;
-        let heatCircles = [];
+        let map;
         let currentCity = 'paris';
+        let trafficLayer = L.layerGroup();
+        let intersectionLayer = L.layerGroup();
+        let vehicleLayer = L.layerGroup();
+        let roadLayer = L.layerGroup();
+        let showTraffic = true;
+        let showVehicles = true;
 
-        // LAYERS STATE
-        let layers = {
-            traffic: true,
-            vehicles: true,
-            intersections: true,
-            heatmap: false
+        // Tile layers
+        const tileLayers = {
+            dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap © CARTO',
+                maxZoom: 19
+            }),
+            satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '© Esri',
+                maxZoom: 19
+            }),
+            standard: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap',
+                maxZoom: 19
+            })
         };
+
+        let currentTileLayer = 'dark';
+
+        function initMap() {
+            map = L.map('map', {
+                center: cities.paris.center,
+                zoom: cities.paris.zoom,
+                zoomControl: false,
+                attributionControl: false
+            });
+
+            tileLayers.dark.addTo(map);
+            trafficLayer.addTo(map);
+            intersectionLayer.addTo(map);
+            vehicleLayer.addTo(map);
+            roadLayer.addTo(map);
+
+            L.control.zoom({ position: 'topright' }).addTo(map);
+
+            loadCityData('paris');
+        }
 
         // ==========================================
         // SWITCH CITY
@@ -544,269 +554,266 @@
             document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
             event.target.closest('.city-tab').classList.add('active');
 
-            // Update map
+            // Fly to city
             map.flyTo(city.center, city.zoom, { duration: 1.5 });
 
-            // Update sidebar
-            document.getElementById('cs-intersections').textContent = city.intersections;
+            // Update sidebar stats
             document.getElementById('cs-vehicles').textContent = city.vehicles;
-            document.getElementById('cs-speed').textContent = city.speed;
+            document.getElementById('cs-intersections').textContent = city.intersections;
             document.getElementById('cs-congestion').textContent = city.congestion;
             document.getElementById('cs-congestion').className = 'csv ' + city.congestionClass;
-            document.getElementById('cs-adjustments').textContent = city.adjustments;
+            document.getElementById('cs-speed').textContent = city.speed;
+            document.getElementById('cs-adjustments').textContent = city.adjustments.toLocaleString();
             document.getElementById('cs-incidents').textContent = city.incidents;
-            document.getElementById('mot-city').textContent = city.name;
 
-            // Update alerts
-            const ac = document.getElementById('alerts-container');
-            ac.innerHTML = '';
-            city.alerts.forEach(a => {
-                const div = document.createElement('div');
-                div.className = 'alert-item alert-' + a.type;
-                div.textContent = a.text;
-                ac.appendChild(div);
-            });
+            // Update overlay
+            document.getElementById('mot-city').textContent = '📍 ' + city.name;
 
-            // Redraw layers
-            drawRoads(city);
-            drawIntersections(city);
-            spawnVehicles(city);
+            // Load data
+            loadCityData(cityKey);
+
+            // Close detail panel
+            closeDetail();
         }
 
         // ==========================================
-        // DRAW ROADS
+        // LOAD CITY DATA ON MAP
         // ==========================================
-        function drawRoads(city) {
-            roadLayers.forEach(l => map.removeLayer(l));
-            roadLayers = [];
+        function loadCityData(cityKey) {
+            const city = cities[cityKey];
 
-            if (!layers.traffic) return;
+            // Clear layers
+            intersectionLayer.clearLayers();
+            roadLayer.clearLayers();
+            vehicleLayer.clearLayers();
 
+            // Draw roads with traffic colors
             city.roads.forEach(road => {
-                const line = L.polyline(road.points, {
+                const polyline = L.polyline(road.coords, {
                     color: road.color,
                     weight: 6,
                     opacity: 0.8,
-                    smoothFactor: 2
-                }).addTo(map);
+                    smoothFactor: 1,
+                    lineCap: 'round'
+                }).addTo(roadLayer);
 
-                line.bindTooltip(
-                    `<strong>${road.name}</strong><br>Status: ${getStatusText(road.color)}`,
-                    { sticky: true, className: 'road-tooltip' }
+                polyline.bindTooltip(
+                    `<strong>${road.name}</strong><br>${road.flow}`,
+                    { className: 'road-tooltip', sticky: true }
+                );
+            });
+
+            // Draw intersections
+            const densityColors = {
+                low: '#00e676',
+                medium: '#ffeb3b',
+                high: '#ff9800',
+                critical: '#f44336'
+            };
+
+            city.intersectionPoints.forEach(int => {
+                const color = densityColors[int.density];
+
+                // Pulsing circle
+                const circle = L.circleMarker([int.lat, int.lng], {
+                    radius: int.density === 'critical' ? 10 : int.density === 'high' ? 8 : 6,
+                    fillColor: color,
+                    fillOpacity: 0.7,
+                    color: color,
+                    weight: 2,
+                    opacity: 0.4
+                }).addTo(intersectionLayer);
+
+                circle.bindTooltip(
+                    `<strong>🚦 ${int.name}</strong><br>Density: <span style="color:${color};font-weight:700">${int.density.toUpperCase()}</span><br><em>Click for details</em>`,
+                    { className: 'int-tooltip' }
                 );
 
-                roadLayers.push(line);
+                circle.on('click', () => openIntersectionDetail(int));
+
+                // Outer pulse ring
+                L.circleMarker([int.lat, int.lng], {
+                    radius: int.density === 'critical' ? 18 : int.density === 'high' ? 14 : 10,
+                    fillColor: color,
+                    fillOpacity: 0.1,
+                    color: color,
+                    weight: 1,
+                    opacity: 0.2
+                }).addTo(intersectionLayer);
             });
-        }
 
-        function getStatusText(color) {
-            switch(color) {
-                case '#00e676': return '🟢 Free Flow';
-                case '#ffeb3b': return '🟡 Moderate';
-                case '#ff9800': return '🟠 Slow';
-                case '#f44336': return '🔴 Congested';
-                default: return 'Unknown';
-            }
+            // Spawn moving vehicles
+            spawnVehicles(cityKey);
         }
 
         // ==========================================
-        // DRAW INTERSECTIONS
+        // VEHICLES
         // ==========================================
-        function drawIntersections(city) {
-            markerLayers.forEach(l => map.removeLayer(l));
-            markerLayers = [];
-            heatCircles.forEach(l => map.removeLayer(l));
-            heatCircles = [];
+        let vehicleIntervals = [];
 
-            if (!layers.intersections && !layers.heatmap) return;
+        function spawnVehicles(cityKey) {
+            // Clear previous
+            vehicleIntervals.forEach(iv => clearInterval(iv));
+            vehicleIntervals = [];
+            vehicleLayer.clearLayers();
 
-            city.markers.forEach(m => {
-                if (layers.intersections) {
-                    const colors = { green: '#00e676', yellow: '#ffeb3b', red: '#f44336' };
-                    const icon = L.divIcon({
-                        className: 'custom-marker',
-                        html: `<div class="marker-dot" style="background:${colors[m.type]};box-shadow:0 0 12px ${colors[m.type]}"></div>`,
-                        iconSize: [18, 18],
-                        iconAnchor: [9, 9]
-                    });
+            const city = cities[cityKey];
+            const vehicleEmojis = ['🚗', '🚙', '🚕', '🚐', '🚌', '🏍', '🚛'];
+            let vehicles = [];
 
-                    const marker = L.marker(m.pos, { icon: icon }).addTo(map);
-                    marker.on('click', () => openDetail(m));
-                    marker.bindTooltip(
-                        `<strong>${m.name}</strong><br>Queue: ${m.queue} | ${m.throughput}/hr`,
-                        { className: 'int-tooltip' }
-                    );
-                    markerLayers.push(marker);
-                }
-
-                if (layers.heatmap) {
-                    const radius = m.type === 'red' ? 500 : m.type === 'yellow' ? 350 : 200;
-                    const colors = { green: '#00e67633', yellow: '#ffeb3b44', red: '#f4433655' };
-                    const circle = L.circle(m.pos, {
-                        radius: radius,
-                        color: 'transparent',
-                        fillColor: colors[m.type].slice(0,7),
-                        fillOpacity: 0.3
-                    }).addTo(map);
-                    heatCircles.push(circle);
-                }
-            });
-        }
-
-        // ==========================================
-        // SPAWN ANIMATED VEHICLES
-        // ==========================================
-        let vehicleAnimations = [];
-
-        function spawnVehicles(city) {
-            vehicleLayers.forEach(l => map.removeLayer(l));
-            vehicleLayers = [];
-            vehicleAnimations.forEach(a => clearInterval(a));
-            vehicleAnimations = [];
-
-            if (!layers.vehicles) return;
-
+            // Create vehicles on roads
             city.roads.forEach(road => {
-                const numVehicles = road.color === '#f44336' ? 5 :
+                const numVehicles = road.color === '#f44336' ? 6 :
                                     road.color === '#ff9800' ? 4 :
                                     road.color === '#ffeb3b' ? 3 : 2;
 
                 for (let i = 0; i < numVehicles; i++) {
-                    const emoji = Math.random() > 0.8 ? '🚌' : Math.random() > 0.5 ? '🚗' : '🚙';
+                    const emoji = vehicleEmojis[Math.floor(Math.random() * vehicleEmojis.length)];
+                    const segIndex = Math.floor(Math.random() * (road.coords.length - 1));
+                    const t = Math.random();
+                    const lat = road.coords[segIndex][0] + (road.coords[segIndex+1][0] - road.coords[segIndex][0]) * t + (Math.random()-0.5)*0.001;
+                    const lng = road.coords[segIndex][1] + (road.coords[segIndex+1][1] - road.coords[segIndex][1]) * t + (Math.random()-0.5)*0.001;
+
                     const icon = L.divIcon({
+                        html: `<span style="font-size:16px;">${emoji}</span>`,
                         className: 'vehicle-icon',
-                        html: `<span>${emoji}</span>`,
                         iconSize: [20, 20],
                         iconAnchor: [10, 10]
                     });
 
-                    // Random position along the road
-                    const segIdx = Math.floor(Math.random() * (road.points.length - 1));
-                    const t = Math.random();
-                    const lat = road.points[segIdx][0] + t * (road.points[segIdx + 1][0] - road.points[segIdx][0]);
-                    const lng = road.points[segIdx][1] + t * (road.points[segIdx + 1][1] - road.points[segIdx][1]);
-
-                    const marker = L.marker([lat, lng], { icon: icon, interactive: false }).addTo(map);
-                    vehicleLayers.push(marker);
-
-                    // Animate
-                    let progress = segIdx + t;
-                    const speed = road.color === '#f44336' ? 0.003 :
-                                  road.color === '#ff9800' ? 0.006 :
-                                  road.color === '#ffeb3b' ? 0.01 : 0.015;
-
-                    const anim = setInterval(() => {
-                        progress += speed;
-                        if (progress >= road.points.length - 1) progress = 0;
-
-                        const seg = Math.floor(progress);
-                        const frac = progress - seg;
-                        const nextSeg = Math.min(seg + 1, road.points.length - 1);
-
-                        const newLat = road.points[seg][0] + frac * (road.points[nextSeg][0] - road.points[seg][0]);
-                        const newLng = road.points[seg][1] + frac * (road.points[nextSeg][1] - road.points[seg][1]);
-
-                        marker.setLatLng([newLat, newLng]);
-                    }, 100);
-
-                    vehicleAnimations.push(anim);
-                }
-            });
-        }
-
-        // ==========================================
-        // TOGGLE LAYERS
-        // ==========================================
-        function toggleLayer(layer) {
-            layers[layer] = !layers[layer];
-            const btn = document.getElementById('tog-' + layer);
-            btn.textContent = layers[layer] ? 'On' : 'Off';
-            btn.classList.toggle('active');
-
-            const city = cities[currentCity];
-            if (layer === 'traffic') drawRoads(city);
-            if (layer === 'vehicles') spawnVehicles(city);
-            if (layer === 'intersections' || layer === 'heatmap') drawIntersections(city);
-        }
-
-        // ==========================================
-        // TIME CHANGE
-        // ==========================================
-        function changeTime() {
-            const val = document.getElementById('time-select').value;
-            document.getElementById('mot-time').textContent =
-                val === 'now' ? 'Live' :
-                val === 'morning' ? '8:00 AM' :
-                val === 'noon' ? '12:00 PM' :
-                val === 'evening' ? '6:00 PM' : '11:00 PM';
-
-            const city = cities[currentCity];
-
-            // Shift road colors based on time
-            city.roads.forEach(road => {
-                if (val === 'morning' || val === 'evening') {
-                    if (road.color === '#00e676') road._origColor = road.color, road.color = '#ffeb3b';
-                    else if (road.color === '#ffeb3b') road._origColor = road.color, road.color = '#ff9800';
-                    else if (road.color === '#ff9800') road._origColor = road.color, road.color = '#f44336';
-                } else if (val === 'night') {
-                    road._origColor = road.color;
-                    road.color = '#00e676';
-                } else if (val === 'noon') {
-                    road._origColor = road.color;
-                    road.color = Math.random() > 0.5 ? '#00e676' : '#ffeb3b';
-                } else if (road._origColor) {
-                    road.color = road._origColor;
+                    const marker = L.marker([lat, lng], { icon: icon }).addTo(vehicleLayer);
+                    vehicles.push({ marker, road, progress: t, segIndex, speed: 0.002 + Math.random() * 0.005 });
                 }
             });
 
-            drawRoads(city);
-            spawnVehicles(city);
-            addAlert(val === 'now' ? 'ℹ️ Switched to live mode' : `ℹ️ Simulating ${document.getElementById('mot-time').textContent} traffic`);
+            // Animate vehicles
+            const iv = setInterval(() => {
+                vehicles.forEach(v => {
+                    v.progress += v.speed;
+                    if (v.progress >= 1) {
+                        v.segIndex++;
+                        v.progress = 0;
+                        if (v.segIndex >= v.road.coords.length - 1) {
+                            v.segIndex = 0;
+                            v.progress = 0;
+                        }
+                    }
+
+                    const c = v.road.coords;
+                    const si = v.segIndex;
+                    if (si < c.length - 1) {
+                        const lat = c[si][0] + (c[si+1][0] - c[si][0]) * v.progress;
+                        const lng = c[si][1] + (c[si+1][1] - c[si][1]) * v.progress;
+                        v.marker.setLatLng([lat, lng]);
+                    }
+                });
+            }, 200);
+
+            vehicleIntervals.push(iv);
         }
 
-        function addAlert(text) {
-            const ac = document.getElementById('alerts-container');
-            const div = document.createElement('div');
-            div.className = 'alert-item alert-info new-alert';
-            div.textContent = text;
-            ac.prepend(div);
+        // ==========================================
+        // MAP CONTROLS
+        // ==========================================
+        function changeMapView(view) {
+            map.removeLayer(tileLayers[currentTileLayer]);
+            currentTileLayer = view;
+            tileLayers[view].addTo(map);
+        }
+
+        function toggleTraffic() {
+            const btn = document.getElementById('tog-traffic');
+            showTraffic = !showTraffic;
+            if (showTraffic) {
+                roadLayer.addTo(map);
+                intersectionLayer.addTo(map);
+                btn.classList.add('active');
+                btn.textContent = 'Show';
+            } else {
+                map.removeLayer(roadLayer);
+                map.removeLayer(intersectionLayer);
+                btn.classList.remove('active');
+                btn.textContent = 'Hide';
+            }
+        }
+
+        function toggleVehicles() {
+            const btn = document.getElementById('tog-vehicles');
+            showVehicles = !showVehicles;
+            if (showVehicles) {
+                vehicleLayer.addTo(map);
+                btn.classList.add('active');
+                btn.textContent = 'Show';
+            } else {
+                map.removeLayer(vehicleLayer);
+                btn.classList.remove('active');
+                btn.textContent = 'Hide';
+            }
         }
 
         // ==========================================
         // INTERSECTION DETAIL
         // ==========================================
-        function openDetail(m) {
+        function openIntersectionDetail(int) {
             const panel = document.getElementById('intersection-detail');
-            panel.classList.add('open');
-            document.getElementById('id-name').textContent = m.name;
-            document.getElementById('id-queue').textContent = m.queue;
-            document.getElementById('id-throughput').textContent = m.throughput + '/hr';
+            document.getElementById('id-name').textContent = '🚦 ' + int.name;
 
-            const isEW = Math.random() > 0.5;
-            document.getElementById('id-phase').textContent = isEW ? 'EW Green' : 'NS Green';
-            document.getElementById('id-wait-ns').textContent = isEW ? Math.floor(Math.random()*30+10)+'s' : Math.floor(Math.random()*10+3)+'s';
-            document.getElementById('id-wait-ew').textContent = !isEW ? Math.floor(Math.random()*30+10)+'s' : Math.floor(Math.random()*10+3)+'s';
+            const nsWait = Math.floor(Math.random() * 20 + 5);
+            const ewWait = Math.floor(Math.random() * 15 + 3);
+            const cycleTime = Math.floor(Math.random() * 30 + 30);
+            const avgWait = Math.floor(Math.random() * 20 + 8);
 
-            const decisions = ['Extend EW +8s', 'Switch to NS phase', 'Priority: Bus detected', 'Shorten cycle -5s', 'Emergency override'];
-            document.getElementById('id-ai').textContent = decisions[Math.floor(Math.random()*decisions.length)];
+            document.getElementById('ids-ns').textContent = nsWait;
+            document.getElementById('ids-ew').textContent = ewWait;
+            document.getElementById('ids-cycle').textContent = cycleTime + 's';
+            document.getElementById('ids-wait').textContent = avgWait + 's';
 
-            // Mini lights
-            if(isEW) {
-                document.getElementById('mi-n').textContent = '🔴';
-                document.getElementById('mi-s').textContent = '🔴';
-                document.getElementById('mi-e').textContent = '🟢';
-                document.getElementById('mi-w').textContent = '🟢';
-            } else {
-                document.getElementById('mi-n').textContent = '🟢';
-                document.getElementById('mi-s').textContent = '🟢';
-                document.getElementById('mi-e').textContent = '🔴';
-                document.getElementById('mi-w').textContent = '🔴';
+            const decisions = [
+                'Extend N/S +8s',
+                'Extend E/W +5s',
+                'Shorten cycle -4s',
+                'Priority: Emergency',
+                'Green wave active',
+                'Pedestrian phase +3s',
+                'Balanced mode'
+            ];
+            document.getElementById('ids-decision').textContent = decisions[Math.floor(Math.random() * decisions.length)];
+
+            // Mini chart
+            const chartEl = document.getElementById('mini-chart');
+            chartEl.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const h = Math.floor(Math.random() * 60 + 20);
+                const isPeak = i >= 7 && i <= 10;
+                const bar = document.createElement('div');
+                bar.className = 'mc-bar' + (isPeak ? ' mc-peak' : '');
+                bar.style.height = (isPeak ? h + 20 : h) + '%';
+                chartEl.appendChild(bar);
             }
+
+            // Traffic lights
+            const nsGreen = nsWait > ewWait;
+            document.getElementById('mi-n').textContent = nsGreen ? '🟢' : '🔴';
+            document.getElementById('mi-s').textContent = nsGreen ? '🟢' : '🔴';
+            document.getElementById('mi-e').textContent = nsGreen ? '🔴' : '🟢';
+            document.getElementById('mi-w').textContent = nsGreen ? '🔴' : '🟢';
+
+            panel.classList.add('open');
         }
 
         function closeDetail() {
             document.getElementById('intersection-detail').classList.remove('open');
         }
+
+        // ==========================================
+        // LIVE TIME
+        // ==========================================
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('mot-time').textContent = now.toLocaleTimeString('fr-FR');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
 
         // ==========================================
         // LIVE COUNTERS
@@ -819,41 +826,71 @@
             carCount += Math.floor(Math.random() * 15 + 5);
             co2Count += Math.floor(Math.random() * 3 + 1);
             hourCount += Math.floor(Math.random() * 2 + 1);
-
             document.getElementById('lc-cars').textContent = carCount.toLocaleString();
             document.getElementById('lc-co2').textContent = co2Count.toLocaleString();
             document.getElementById('lc-hours').textContent = hourCount.toLocaleString();
         }
-
         setInterval(animateCounters, 2000);
         animateCounters();
 
         // ==========================================
-        // LIVE STAT UPDATES
+        // DYNAMIC STATS
         // ==========================================
         setInterval(() => {
             const city = cities[currentCity];
-            // Slightly randomize stats
             const baseVehicles = parseInt(city.vehicles.replace(/,/g, ''));
-            const newV = baseVehicles + Math.floor(Math.random()*200-100);
+            const newV = baseVehicles + Math.floor(Math.random() * 200 - 100);
             document.getElementById('cs-vehicles').textContent = newV.toLocaleString();
-
-            const baseAdj = city.adjustments;
-            document.getElementById('cs-adjustments').textContent = baseAdj + Math.floor(Math.random()*20-10);
+            document.getElementById('cs-adjustments').textContent = (city.adjustments + Math.floor(Math.random() * 20 - 10)).toLocaleString();
         }, 3000);
+
+        // ==========================================
+        // DYNAMIC ROAD COLORS
+        // ==========================================
+        setInterval(() => {
+            const city = cities[currentCity];
+            const colors = ['#00e676', '#ffeb3b', '#ff9800', '#f44336'];
+            roadLayer.eachLayer(layer => {
+                if (layer.setStyle && Math.random() < 0.15) {
+                    const newColor = colors[Math.floor(Math.random() * colors.length)];
+                    layer.setStyle({ color: newColor });
+                }
+            });
+        }, 5000);
+
+        // ==========================================
+        // DYNAMIC ALERTS
+        // ==========================================
+        const alertMessages = [
+            { type: 'alert-warning', msg: '🚧 Accident detected on Bd Périphérique' },
+            { type: 'alert-success', msg: '✅ AI rerouted 520 vehicles successfully' },
+            { type: 'alert-info', msg: '🔄 16 signals optimized this minute' },
+            { type: 'alert-danger', msg: '🚨 Emergency vehicle priority activated' },
+            { type: 'alert-success', msg: '✅ Congestion cleared on Rue de Rivoli' },
+            { type: 'alert-info', msg: '📊 Traffic prediction updated for next 30 min' },
+            { type: 'alert-warning', msg: '🚧 Road work detected — rerouting traffic' },
+            { type: 'alert-success', msg: '✅ Green wave active on Bd Lundy' },
+            { type: 'alert-info', msg: '🔄 Pedestrian flow optimization engaged' },
+        ];
+
+        setInterval(() => {
+            const container = document.getElementById('alerts-container');
+            const alert = alertMessages[Math.floor(Math.random() * alertMessages.length)];
+            const div = document.createElement('div');
+            div.className = 'alert-item ' + alert.type + ' new-alert';
+            div.textContent = alert.msg;
+            container.insertBefore(div, container.firstChild);
+
+            // Keep max 6
+            while (container.children.length > 6) {
+                container.removeChild(container.lastChild);
+            }
+        }, 8000);
 
         // ==========================================
         // INIT
         // ==========================================
-        switchCity('paris');
-
-        // Fix tab click (ensure correct button)
-        document.querySelectorAll('.city-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+        window.addEventListener('load', initMap);
     </script>
 
 </body>
