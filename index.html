@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFlow - Reduce Urban Traffic Congestion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">🚦 SmartFlow</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#solutions">Solutions</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#impact">Impact</a></li>
+            <li><a href="#prototype">Prototype</a></li>
+        </ul>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Reimagining Urban Mobility</h1>
+            <p class="subtitle">How might we reduce traffic congestion in densely populated cities?</p>
+            <p class="tagline">SmartFlow combines AI-powered traffic lights, carpooling incentives, and micro-mobility into one unified platform.</p>
+            <a href="#solutions" class="cta-btn">Discover Our Solutions</a>
+        </div>
+        <div class="hero-visual">
+            <div class="city-animation">
+                <div class="building b1"></div>
+                <div class="building b2"></div>
+                <div class="building b3"></div>
+                <div class="building b4"></div>
+                <div class="building b5"></div>
+                <div class="road">
+                    <div class="car car1">🚗</div>
+                    <div class="car car2">🚙</div>
+                    <div class="car car3">🛴</div>
+                    <div class="car car4">🚲</div>
+                </div>
+                <div class="traffic-light">
+                    <div class="light red"></div>
+                    <div class="light yellow"></div>
+                    <div class="light green active-light"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section id="problem" class="section problem-section">
+        <h2>🔍 The Problem</h2>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">⏱️</div>
+                <h3>Time Wasted</h3>
+                <p>Urban commuters lose an average of <strong>54 hours per year</strong> stuck in traffic. That's over 2 full days of life wasted annually.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🌍</div>
+                <h3>CO₂ Emissions</h3>
+                <p>Traffic congestion contributes to <strong>29% of greenhouse gas emissions</strong> in urban areas, accelerating climate change.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">💸</div>
+                <h3>Economic Cost</h3>
+                <p>Congestion costs the global economy over <strong>$1 trillion annually</strong> in lost productivity and fuel waste.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">😤</div>
+                <h3>Quality of Life</h3>
+                <p>Noise pollution, stress, and reduced accessibility hurt the <strong>mental and physical health</strong> of millions of city dwellers.</p>
+            </div>
+        </div>
+        <div class="empathy-box">
+            <h3>📋 Empathy Research Summary</h3>
+            <p>We conducted <strong>15 interviews</strong> with daily commuters in Paris, Lyon, and Reims. Key insights:</p>
+            <ul>
+                <li>"I'd carpool but I never know who's going my way at the same time."</li>
+                <li>"Traffic lights seem random — green when no one's there, red when the road is packed."</li>
+                <li>"I'd use a scooter for short trips but I don't know where to find one reliably."</li>
+                <li>"There's no single app that shows me the best option for my commute right now."</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- DEFINITION -->
+    <section class="section definition-section">
+        <h2>🎯 Problem Definition</h2>
+        <div class="definition-card">
+            <p class="hmw">"How might we reduce traffic congestion in densely populated cities by offering commuters smarter, real-time, multi-modal alternatives?"</p>
+        </div>
+        <div class="persona-grid">
+            <div class="persona-card">
+                <div class="persona-avatar">👩‍💼</div>
+                <h3>Sophie, 32</h3>
+                <p class="persona-role">Marketing Manager, Paris</p>
+                <p>Drives 45 min to work (should take 20). Frustrated by unpredictable traffic. Open to alternatives but needs reliability.</p>
+            </div>
+            <div class="persona-card">
+                <div class="persona-avatar">👨‍🎓</div>
+                <h3>Karim, 24</h3>
+                <p class="persona-role">Student, Lyon</p>
+                <p>Uses public transit + e-scooter. Wants a single app to plan multi-modal routes. Budget-conscious.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section id="solutions" class="section solutions-section">
+        <h2>💡 Our 3 Solutions</h2>
+        <p class="section-subtitle">Ideation phase: we brainstormed 12 ideas and converged on 3 complementary pillars.</p>
+        <div class="solutions-grid">
+            <div class="solution-card" id="sol1">
+                <div class="solution-header">
+                    <span class="solution-number">01</span>
+                    <div class="solution-icon">🤖</div>
+                </div>
+                <h3>Smart Traffic Lights</h3>
+                <p>AI-powered traffic signals that adapt in real-time to traffic flow using sensors and camera data. Reduces average wait time by up to 40%.</p>
+                <ul class="feature-list">
+                    <li>✅ Real-time density detection</li>
+                    <li>✅ Emergency vehicle priority</li>
+                    <li>✅ Pedestrian-aware timing</li>
+                    <li>✅ Connected corridor sync</li>
+                </ul>
+                <div class="solution-demo">
+                    <h4>Live Simulation</h4>
+                    <div class="traffic-sim">
+                        <div class="sim-road">
+                            <div class="sim-lane" id="lane-ns">
+                                <div class="sim-car-v">🚗</div>
+                                <div class="sim-car-v delay1">🚙</div>
+                            </div>
+                            <div class="sim-intersection">
+                                <div class="sim-light-container">
+                                    <div class="sim-light-dot sim-red" id="light-ns"></div>
+                                    <div class="sim-light-dot sim-green" id="light-ew"></div>
+                                </div>
+                            </div>
+                            <div class="sim-lane-h" id="lane-ew">
+                                <div class="sim-car-h">🚗</div>
+                                <div class="sim-car-h delay2">🚕</div>
+                                <div class="sim-car-h delay3">🚗</div>
+                            </div>
+                        </div>
+                        <p class="sim-status">AI detected: <strong>Heavy East-West traffic</strong> → Green extended ✅</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-card" id="sol2">
+                <div class="solution-header">
+                    <span class="solution-number">02</span>
+                    <div class="solution-icon">🚗</div>
+                </div>
+                <h3>Carpooling Incentives</h3>
+                <p>A reward-based system that matches commuters with similar routes and schedules. Earn points for every shared ride.</p>
+                <ul class="feature-list">
+                    <li>✅ Smart route matching</li>
+                    <li>✅ Points & reward system</li>
+                    <li>✅ Corporate partnerships</li>
+                    <li>✅ Verified rider profiles</li>
+                </ul>
+                <div class="carpool-demo">
+                    <h4>Match Preview</h4>
+                    <div class="match-card">
+                        <div class="
